@@ -171,3 +171,6 @@ tbl4 <- data.table(
 
 write.csv(tbl4, file=here("tables/mis011-table4.csv"))
 
+kable(tbl4) %>%
+  kable_styling(font_size = 12, full_width = TRUE) %>%
+  save_kable(file=here("tables/misO11-table4.html"))

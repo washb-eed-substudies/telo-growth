@@ -84,3 +84,6 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
 # export table as csv
 write.csv(tbl, file = here("tables/mis011-table1.csv"))
 
+kable(tbl) %>%
+  kable_styling(font_size = 12, full_width = TRUE) %>%
+  save_kable(file=here("tables/misO11-table1.html"))
