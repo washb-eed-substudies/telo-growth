@@ -156,9 +156,9 @@ tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=NULL, cols=tableau10
 
 pH1 <- tmle_plot_fun(d, 1, title="", ylabel="Difference in\nchange in Z-score")
 pH2 <- tmle_plot_fun(d, 2, yrange=c(-0.065, 0.03), title="", cols=tableau10[c(5:7)],  ylabel="Difference in\nvelocity in cm or kg")
-pH3 <- tmle_plot_fun(d, 3, title="", ylabel="Z-score difference")
+pH3 <- tmle_plot_fun(d, 3, title="", ylabel="Difference in mean Z-score")
 #pH4 <- tmle_plot_fun(d, 4, title="", ylabel="Z-score difference")
-pH5 <- tmle_plot_fun(d, 5, title="", ylabel="Z-score difference")
+pH5 <- tmle_plot_fun(d, 5, title="", ylabel="Difference in mean Z-score")
 #pH6 <- tmle_plot_fun(d, 6, title="", ylabel="Z-score difference")
 pH7 <- tmle_plot_fun(d, 7, yrange=c(-0.03, 0.03), title="", cols=tableau10[c(5:7)], ylabel="Difference in\nvelocity in cm or kg")
 pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
@@ -181,9 +181,9 @@ pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
 p2 <- tmle_plot_fun(d, hypo=c(4,6), title="", ylabel="Z-score difference")
 
 
-ggsave(p2, file = here("figures/telo-growth-quartiles-differences_1.png"), height=3, width=14)
-ggsave(pH5, file = here("figures/telo-growth-quartiles-differences_2.png"), height=3, width=14)
-ggsave(pH2, file = here("figures/telo-growth-quartiles-differences_3.png"), height=3, width=14)
+ggsave(p2, file = here("figures/telo-growth-quartiles-differences_2.png"), height=3, width=14)
+ggsave(pH5, file = here("figures/telo-growth-quartiles-differences_3.png"), height=3, width=14)
+ggsave(pH2, file = here("figures/telo-growth-quartiles-differences_4.png"), height=3, width=14)
 
 #Supplimentary figures
 

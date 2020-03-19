@@ -53,7 +53,7 @@ TS_density_plot<-function(Y, X, Xlabel, Ylabel, col_i=1){
     #scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     #scale_color_manual(values=Y_color) + 
     scale_fill_manual(values=Y_color) + 
-    labs(x=Xlabel, y=paste0("Quartile of ",Ylabel)) +
+    labs(x=Ylabel, y=paste0("Quartile of ",Xlabel)) +
     theme_minimal(base_size=16) +
     theme(legend.position = "none")
   
@@ -152,7 +152,7 @@ save(
   h8_delta_waz_v_ts_t2_dens,
   h8_delta_whz_v_ts_t2_dens,
   h8_delta_hcz_v_ts_t2_dens,
-  file=here("/audrie results/telo_density_plot_objects.Rdata"))
+  file=here("/results/telo_density_plot_objects.Rdata"))
 
 
   p1 <- plot_grid(
