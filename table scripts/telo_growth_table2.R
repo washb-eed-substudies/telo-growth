@@ -1,8 +1,8 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 library("xtable")
-load(here("audrie results/telo_growth_results.Rdata"))
-load(here("audrie results/telo_growth_spline_fits.Rdata"))
+load(here("results/telo_growth_results.Rdata"))
+load(here("results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
 round_df <- function(df, digits) {
