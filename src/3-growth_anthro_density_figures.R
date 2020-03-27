@@ -55,11 +55,12 @@ TS_density_plot<-function(Y, X, Xlabel, Ylabel, col_i=1){
     geom_vline(aes(xintercept = Xmedian)) +
     geom_text(aes(x = Xmedian, y=lab_pos, label=Xmedian2), hjust=-0.5) +
     scale_alpha_manual(values=c(0.4, 0.6, 0.8, 1),guide=F) +
+    coord_cartesian(ylim=c(0,lab_pos+(lab_pos*0.2)))+
     #scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     #scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     #scale_color_manual(values=Y_color) + 
     scale_fill_manual(values=Y_color) + 
-    labs(x=paste0(Ylabel, ", stratified by\nthe quartile of the\n",Xlabel), y="Density") +
+    labs(x=paste0(Ylabel, ", stratified\nby the quartile of the\n",Xlabel), y="Density") +
     theme_minimal(base_size=16) +
     theme(legend.position = "none")
   p
