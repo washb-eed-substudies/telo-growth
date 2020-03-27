@@ -89,9 +89,9 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
                        "n (%) or median (IQR)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")), stringsAsFactors=FALSE)
 
 # export table as csv
-write.csv(tbl, file = here("tables/telo_growth/telo_growth_main/telo_growth_table1.csv"))
-write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.csv"),append=TRUE)
-print(xtable(tbl), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.html"))
-write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.html"),append=TRUE)
+write.csv(tbl, file = here("tables/main/telo_growth_table1.csv"))
+write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/main/telo_growth_table1.csv"),append=TRUE)
+print(xtable(tbl), type="html", file=here("tables/main/telo_growth_table1.html"))
+write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/main/telo_growth_table1.html"),append=TRUE)
 
 

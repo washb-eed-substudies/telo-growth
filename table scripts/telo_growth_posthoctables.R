@@ -1,8 +1,8 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
-load(here("audrie results/telo_growth_spline_fits.Rdata"))
-load(here("audrie results/telo_growth_results.Rdata"))
+load(here("results/telo_growth_spline_fits.Rdata"))
+load(here("results/telo_growth_results.Rdata"))
 
 # anthro is the string name of the anthro outcome to input into table
 make_table <- function(anthro){
@@ -57,8 +57,8 @@ TSrows <- function(tbladj, tblunadj, var, tsyear, hypo){
 }
 
 save <- function(tbl, name){
-  write.table(tbl, file=here(paste("tables/miso11-post-hoc-supplementary/", name, ".csv", sep="")), sep=",", col.names=F, row.names=F)
-  print(xtable(tbl), type="html", file=here(paste("tables/miso11-post-hoc-supplementary/", name, ".html", sep="")))
+  write.table(tbl, file=here(paste("tables/posthoc_supplementary/", name, ".csv", sep="")), sep=",", col.names=F, row.names=F)
+  print(xtable(tbl), type="html", file=here(paste("tables/posthoc_supplementary/", name, ".html", sep="")))
 }
 
 

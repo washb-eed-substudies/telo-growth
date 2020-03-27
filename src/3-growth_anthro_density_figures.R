@@ -17,7 +17,7 @@ head(d)
 tableau10 <- c("#1F77B4","#FF7F0E","#2CA02C","#D62728",
                "#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF")
 
-color_levels = c("Change in LAZ\nbetween years 1 and 2", "Change in WLZ\nbetween years 1 and 2", "Change in WAZ\nbetween years 1 and 2", "Change in HCZ\nbetween years 1 and 2",  
+color_levels = c("change in LAZ\nbetween years 1 and 2", "change in WLZ\nbetween years 1 and 2", "change in WAZ\nbetween years 1 and 2", "change in HCZ\nbetween years 1 and 2",  
                  "LAZ - year 1", "WLZ - year 1","WAZ - year q", "HCZ - year 1" ,
                  "LAZ - year 2", "WLZ - year 2","WAZ - year 2", "HCZ - year 2" ,
                  "Length velocity\nbetween years 1 and 2", "Weight velocity\nbetween years 1 and 2", "Head circumference velocity\nbetween years 1 and 2")
@@ -37,26 +37,32 @@ TS_density_plot<-function(Y, X, Xlabel, Ylabel, col_i=1){
   dat$x<-factor(findInterval(dat$X, Acuts))
   levels(dat$x) = c("Quartile 1","Quartile 2","Quartile 3","Quartile 4")
   
-  dat <- dat %>% group_by(x) %>% mutate(Xmedian=median(Y), Xmedian2=ifelse(row_number()==1, Xmedian, NA)) %>% ungroup()
+  dat <- dat %>% group_by(x) %>% mutate(Xmedian=median(Y), Xmedian2=round(ifelse(row_number()==1, Xmedian, NA),2)) %>% ungroup()
                           
   
   Y_color=rep(tableau10[col_i],4)
-
+  
+  h <- density(dat$Y)
+  
+ 
+  
+  
+  lab_pos <-  max(density(dat$Y)$y)
   
   p <- ggplot(data=dat, aes(x=Y,group=x, fill=x)) +
     facet_wrap(~x,ncol=1) +
     geom_density(aes(y=..density.. , alpha=x),color=NA) +
     geom_vline(aes(xintercept = Xmedian)) +
-    geom_text(aes(x = Xmedian, y=1, label=Xmedian2), hjust=-0.5) +
+    geom_text(aes(x = Xmedian, y=lab_pos, label=Xmedian2), hjust=-0.5) +
     scale_alpha_manual(values=c(0.4, 0.6, 0.8, 1),guide=F) +
     #scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     #scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     #scale_color_manual(values=Y_color) + 
     scale_fill_manual(values=Y_color) + 
-    labs(x=Ylabel, y=paste0("Quartile of ",Xlabel)) +
+    labs(x=paste0(Ylabel, ", stratified by\nthe quartile of the\n",Xlabel), y="Density") +
     theme_minimal(base_size=16) +
     theme(legend.position = "none")
-  
+  p
   return(p)
   
 }
@@ -65,21 +71,21 @@ TS_density_plot<-function(Y, X, Xlabel, Ylabel, col_i=1){
 
 
 #Hypothesis 1
-h1_delta_laz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_laz_t2_t3, X=d$delta_TS, Ylabel="LAZ change", Xlabel="Change in T/S ratio", col_i=1)
-h1_delta_waz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_waz_t2_t3, X=d$delta_TS, Ylabel="WAZ change", Xlabel="Change in T/S ratio", col_i=3)
-h1_delta_whz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_whz_t2_t3, X=d$delta_TS, Ylabel="WLZ change", Xlabel="Change in T/S ratio", col_i=2)
-h1_delta_hcz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_hcz_t2_t3, X=d$delta_TS, Ylabel="HCZ change", Xlabel="Change in T/S ratio", col_i=4) 
+h1_delta_laz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_laz_t2_t3, X=d$delta_TS, Ylabel="LAZ change", Xlabel="change in T/S ratio", col_i=1)
+h1_delta_waz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_waz_t2_t3, X=d$delta_TS, Ylabel="WAZ change", Xlabel="change in T/S ratio", col_i=3)
+h1_delta_whz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_whz_t2_t3, X=d$delta_TS, Ylabel="WLZ change", Xlabel="change in T/S ratio", col_i=2)
+h1_delta_hcz_v_delta_ts_dens <- TS_density_plot(Y=d$delta_hcz_t2_t3, X=d$delta_TS, Ylabel="HCZ change", Xlabel="change in T/S ratio", col_i=4) 
 
 #Hypothesis 2
-h2_len_velocity_v_delta_ts_dens <- TS_density_plot(Y=d$len_velocity_t2_t3, X=d$delta_TS, Ylabel="Length velocity", Xlabel="Change in T/S ratio", col_i=5)
-h2_wei_velocity_v_delta_ts_dens <- TS_density_plot(Y=d$wei_velocity_t2_t3, X=d$delta_TS, Ylabel="Weight velocity", Xlabel="Change in T/S ratio", col_i=6)
-h2_hc_velocity_v_delta_ts_dens <- TS_density_plot(Y=d$hc_velocity_t2_t3, X=d$delta_TS, Ylabel="Head circumference velocity", Xlabel="Change in T/S ratio", col_i=7)
+h2_len_velocity_v_delta_ts_dens <- TS_density_plot(Y=d$len_velocity_t2_t3, X=d$delta_TS, Ylabel="Length velocity", Xlabel="change in T/S ratio", col_i=5)
+h2_wei_velocity_v_delta_ts_dens <- TS_density_plot(Y=d$wei_velocity_t2_t3, X=d$delta_TS, Ylabel="Weight velocity", Xlabel="change in T/S ratio", col_i=6)
+h2_hc_velocity_v_delta_ts_dens <- TS_density_plot(Y=d$hc_velocity_t2_t3, X=d$delta_TS, Ylabel="Head circumference velocity", Xlabel="change in T/S ratio", col_i=7)
 
 #Hypothesis 3
-h3_laz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$laz_t3, X=d$delta_TS, Ylabel="Year 2 LAZ", Xlabel="Change in T/S ratio", col_i=1)
-h3_waz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$waz_t3, X=d$delta_TS, Ylabel="Year 2 LAZ", Xlabel="Change in T/S ratio", col_i=3)
-h3_whz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$whz_t3, X=d$delta_TS, Ylabel="Year 2 WLZ", Xlabel="Change in T/S ratio", col_i=2)
-h3_hcz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$hcz_t3, X=d$delta_TS, Ylabel="Year 2 HCZ", Xlabel="Change in T/S ratio", col_i=4)
+h3_laz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$laz_t3, X=d$delta_TS, Ylabel="Year 2 LAZ", Xlabel="change in T/S ratio", col_i=1)
+h3_waz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$waz_t3, X=d$delta_TS, Ylabel="Year 2 LAZ", Xlabel="change in T/S ratio", col_i=3)
+h3_whz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$whz_t3, X=d$delta_TS, Ylabel="Year 2 WLZ", Xlabel="change in T/S ratio", col_i=2)
+h3_hcz_t3_vs_delta_ts_dens <- TS_density_plot(Y=d$hcz_t3, X=d$delta_TS, Ylabel="Year 2 HCZ", Xlabel="change in T/S ratio", col_i=4)
 
 #Hypothesis 4
 h4_laz_t2_vs_ts_t2_dens <- TS_density_plot(Y=d$laz_t2, X=d$TS_t2, Ylabel="Year 1 LAZ", Xlabel="Year 1 T/S ratio", col_i=1)

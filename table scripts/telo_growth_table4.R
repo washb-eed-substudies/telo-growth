@@ -1,8 +1,8 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
-load(here("audrie results/telo_growth_results.Rdata"))
-load(here("audrie results/telo_growth_spline_fits.Rdata"))
+load(here("results/telo_growth_results.Rdata"))
+load(here("results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
 round_df <- function(df, digits) {
@@ -169,8 +169,20 @@ tbl4 <- data.table(
         as.character(lenvadj$Pval[4]), as.character(weivadj$Pval[4]), as.character(hcvadj$Pval[4]))
 )
 
+#Add quartile cutpoints
+Q1 <- h3unadj.res$cutpoints[1]
+Q2 <- h3unadj.res$cutpoints[2]
+Q3 <- h3unadj.res$cutpoints[3]
+Q4 <- h3unadj.res$cutpoints[4]
 
-write.csv(tbl4, file=here("tables/telo_growth/telo_growth_main/telo_growth_table4.csv"))
-print(xtable(tbl4), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table4.html"))
+colnames(tbl4)
+colnames(tbl4)[7] <- paste0("Change in T/S Ratio between Year 1 to Year 2,\nQuartile 2: ",Q2," vs. Quartile 1: ",Q1)
+colnames(tbl4)[11] <- paste0("Change in T/S Ratio between Year 1 to Year 2,\nQuartile 3: ",Q3," vs. Quartile 1: ",Q1)
+colnames(tbl4)[15] <- paste0("Change in T/S Ratio between Year 1 to Year 2,\nQuartile 4: ",Q4," vs. Quartile 1: ",Q1)
+
+
+
+write.csv(tbl4, file=here("tables/main/telo_growth_table4.csv"))
+print(xtable(tbl4), type="html", file=here("tables/main/telo_growth_table4.html"))
 
 

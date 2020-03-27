@@ -18,9 +18,9 @@ d1 <- rbind(
   data.frame(x="Change in T/S ratio", y="Change in WLZ\nbetween years 1 and 2", h1_delta_waz_v_delta_tsgam.res),
   data.frame(x="Change in T/S ratio", y="Change in HCZ\nbetween years 1 and 2", h1_delta_hcz_v_delta_tsgam.res))
 d2 <- rbind(
-  data.frame(x="Change in T/S ratio", y="Length velocity\nbetween years 1 and 2", h2_len_velocity_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Weight velocity\nbetween years 1 and 2", h2_wei_velocity_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Head circumference velocity\nbetween years 1 and 2", h2_hc_velocity_v_delta_tsgam.res))
+  data.frame(x="Change in T/S ratio", y="Length velocity (cm/mo)\nbetween years 1 and 2", h2_len_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Weight velocity (kg/mo)\nbetween years 1 and 2", h2_wei_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Head circumference velocity (cm/mo)\nbetween years 1 and 2", h2_hc_velocity_v_delta_tsgam.res))
 d3 <- rbind(
   data.frame(x="Change in T/S ratio", y="LAZ - year 2", h3_laz_t3_vs_delta_tsgam.res),
   data.frame(x="Change in T/S ratio", y="WAZ - year 2", h3_waz_t3_vs_delta_tsgam.res),
@@ -42,9 +42,9 @@ d6 <- rbind(
   data.frame(x="T/S ratio - year 1", y="WLZ - year 2", h6_whz_t3_vs_ts_t2gam.res),
   data.frame(x="T/S ratio - year 1", y="HCZ - year 2", h6_hcz_t3_vs_ts_t2gam.res))
 d7 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="Length velocity\nbetween years 1 and 2", h7_len_veloc_vs_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Weight velocity\nbetween years 1 and 2", h7_wei_veloc_vs_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Head circumference velocity\nbetween years 1 and 2", h7_hc_veloc_vs_ts_t2gam.res))
+  data.frame(x="T/S ratio - year 1", y="Length velocity (cm/mo)\nbetween years 1 and 2", h7_len_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Weight velocity (kg/mo)\nbetween years 1 and 2", h7_wei_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Head circumference velocity (cm/mo)\nbetween years 1 and 2", h7_hc_veloc_vs_ts_t2gam.res))
 d8 <- rbind(
   data.frame(x="T/S ratio - year 1", y="Change in LAZ\nbetween years 1 and 2", h8_delta_laz_v_ts_t2gam.res),
   data.frame(x="T/S ratio - year 1", y="Change in WAZ\nbetween years 1 and 2", h8_delta_waz_v_ts_t2gam.res),
@@ -68,7 +68,7 @@ spline_plot_functions <- function(d){
   color_levels = c("Change in LAZ\nbetween years 1 and 2", "Change in WLZ\nbetween years 1 and 2", "Change in WAZ\nbetween years 1 and 2", "Change in HCZ\nbetween years 1 and 2",  
                    "LAZ - year 1", "WLZ - year 1","WAZ - year 1", "HCZ - year 1" ,
                    "LAZ - year 2", "WLZ - year 2","WAZ - year 2", "HCZ - year 2" ,
-                   "Length velocity\nbetween years 1 and 2", "Weight velocity\nbetween years 1 and 2", "Head circumference velocity\nbetween years 1 and 2")
+                   "Length velocity (cm/mo)\nbetween years 1 and 2", "Weight velocity (kg/mo)\nbetween years 1 and 2", "Head circumference velocity (cm/mo)\nbetween years 1 and 2")
   
   nlevels <- length(levels(d$y))
 

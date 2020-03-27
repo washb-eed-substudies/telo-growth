@@ -73,7 +73,8 @@ Nhcz <- as.character(nrow(h8_delta_hcz_v_ts_t2gam.res))
 Nlenv <- as.character(nrow(h7_len_veloc_vs_ts_t2gam.res))
 Nweiv <- as.character(nrow(h7_wei_veloc_vs_ts_t2gam.res))
 Nhcv <- as.character(nrow(h7_hc_veloc_vs_ts_t2gam.res))
-               
+
+
 tbl2 <- data.table(
   "Outcome"=c(" ", " ", "LAZ, Year 1", "WAZ, Year 1", "WLZ, Year 1", "HCZ, Year 1",
                  " ", "LAZ, Year 2", "WAZ, Year 2", "WLZ, Year 2", "HCZ, Year 2", 
@@ -230,8 +231,19 @@ tbl2 <- data.table(
         as.character(lenvadj$Pval[4]), as.character(weivadj$Pval[4]), as.character(hcvadj$Pval[4]))
 )
 
+#Add quartile cutpoints
+Q1 <- h4adj.res$cutpoints[1]
+Q2 <- h4adj.res$cutpoints[2]
+Q3 <- h4adj.res$cutpoints[3]
+Q4 <- h4adj.res$cutpoints[4]
 
-write.csv(tbl2, file=here("tables/telo_growth/telo_growth_main/telo_growth_table2.csv"))
-print(xtable(tbl2), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table2.html"))
+colnames(tbl2)
+colnames(tbl2)[7] <- paste0("T/S Ratio Year 1,\nQuartile 2: ",Q2," vs. Quartile 1: ",Q1)
+colnames(tbl2)[11] <- paste0("T/S Ratio Year 1,\nQuartile 3: ",Q3," vs. Quartile 1: ",Q1)
+colnames(tbl2)[15] <- paste0("T/S Ratio Year 1,\nQuartile 4: ",Q4," vs. Quartile 1: ",Q1)
+
+
+write.csv(tbl2, file=here("tables/main/telo_growth_table2.csv"))
+print(xtable(tbl2), type="html", file=here("tables/main/telo_growth_table2.html"))
 
 
