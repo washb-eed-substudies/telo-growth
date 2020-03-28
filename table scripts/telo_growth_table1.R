@@ -85,7 +85,7 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 2", " " = "CES-D sco
                        "n (%) or median (IQR)" = paste(CES_D2[3], " (", CES_D2[2], ", ", CES_D2[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Perceived stress at Year 2", " " = "Perceived Stress Scale score", 
                        "n (%) or median (IQR)" = paste(PPS[3], " (", PPS[2], ", ", PPS[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "Any lifetime exposure: number of women", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Physical, sexual, or emotional intimate partner violence (%)", " " = "Any lifetime exposure: number of women", 
                        "n (%) or median (IQR)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")), stringsAsFactors=FALSE)
 
 # export table as csv
