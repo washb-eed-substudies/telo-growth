@@ -1,4 +1,7 @@
-"Outcome","N","Q1 Mean","Q2 Mean","Q3 Mean","Q4 Mean","Change in LAZ between Month 3 to Year 1, Q1 vs. Q2"," "," "," ","Change in LAZ between Month 3 to Year 1, Q1 vs. Q3"," "," "," ","Change in LAZ between Month 3 to Year 1, Q1 vs. Q4"," "," "," "
+"Outcome","N","Q1 Mean","Q2 Mean","Q3 Mean","Q4 Mean","Change in LAZ between Month 3 to Year 1, 
+Quartile 2: [-0.65, -0.2) vs. Quartile 1: <-0.65"," "," "," ","Change in LAZ between Month 3 to Year 1, 
+Quartile 3: [-0.2, 0.29) vs. Quartile 1: <-0.65"," "," "," ","Change in LAZ between Month 3 to Year 1, 
+Quartile 4: >=0.29 vs. Quartile 1: <-0.65"," "," "," "
 " "," "," "," "," "," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," "
 " "," "," "," "," "," ","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value"
 "T/S Ratio Year 1","410","1.41","1.43","1.43","1.49","0.02 (-0.05, 0.09)","0.55","0 (-0.06, 0.06)","0.96","0.02 (-0.04, 0.08)","0.47","0.01 (-0.04, 0.06)","0.72","0.08 (0.02, 0.15)","0.01","0.08 (0.01, 0.14)","0.02"
