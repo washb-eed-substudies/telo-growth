@@ -154,6 +154,10 @@ tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=NULL, cols=tableau10
 }
 
 
+#save plot dataframe
+saveRDS(d, file=here("results/ATE_figure_data.RDS"))
+
+
 pH1 <- tmle_plot_fun(d, 1, title="", ylabel="Difference in\nchange in Z-score")
 pH2 <- tmle_plot_fun(d, 2, yrange=c(-0.065, 0.03), title="", cols=tableau10[c(5:7)],  ylabel="Difference in\nvelocity in cm or kg")
 pH3 <- tmle_plot_fun(d, 3, title="", ylabel="Difference in mean Z-score")
