@@ -213,9 +213,9 @@ pcomb2 <- plot_grid(p4,
 
 
 
-ggsave(pcomb1, file = here("figures/telo-growth-splines_1.png"), height=12, width=14)
-ggsave(pcomb2, file = here("figures/telo-growth-splines_2.png"), height=16, width=14)
-ggsave(p5, file = here("figures/telo-growth-splines_3.png"), height=4, width=14)
+ggsave(pcomb1, file = here("figures/telo-growth-splines_1.tiff"), height=12, width=14)
+ggsave(pcomb2, file = here("figures/telo-growth-splines_2.tiff"), height=16, width=14)
+ggsave(p5, file = here("figures/telo-growth-splines_3.tiff"), height=4, width=14)
 
 
 
