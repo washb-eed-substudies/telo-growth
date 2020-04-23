@@ -39,11 +39,11 @@ viol <- round(mean(d$life_viol_any_t3, na.rm=TRUE) * 100) #percentage
 tbl <- data.table(" "=character(), " "=character(), " "=character(), "n (%) or median (25th percentile, 75th percentile)"=numeric())
 tbl <- rbind(tbl, list(" " = "Child", " " = " ", " " = "Female (%)", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(length(d$sex[d$sex == "female"]), " (", female, "%)", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 1", " " = "T/S Ratio*", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 1", " " = "T/S Ratio", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(telo1med[3]," (", telo1med[2], ", ", telo1med[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio*", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(telo2med[3]," (", telo2med[2], ", ", telo2med[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio*", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 3 months, Month 3)", " " = "Length-for-age Z score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
