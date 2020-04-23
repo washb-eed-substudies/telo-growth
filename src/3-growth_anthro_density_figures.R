@@ -203,11 +203,12 @@ save(
 
 
 
-ggsave(p1, file = here("figures/density plots/telo-density_h1.png"), height=6, width=14)
-ggsave(p2, file = here("figures/density plots/telo-density_h2.png"), height=6, width=14)
-ggsave(p3, file = here("figures/density plots/telo-density_h3.png"), height=6, width=14)
-ggsave(p4, file = here("figures/density plots/telo-density_h4.png"), height=6, width=14)
-ggsave(p5, file = here("figures/density plots/telo-density_h5.png"), height=6, width=14)
-ggsave(p6, file = here("figures/density plots/telo-density_h6.png"), height=6, width=14)
-ggsave(p7, file = here("figures/density plots/telo-density_h7.png"), height=6, width=14)
-ggsave(p8, file = here("figures/density plots/telo-density_h8.png"), height=6, width=14)
+ggsave(p1, file = here("figures/telo-density_h1.tiff"), height=6, width=14)
+ggsave(p2, file = here("figures/telo-density_h2.tiff"), height=6, width=14)
+ggsave(p3, file = here("figures/telo-density_h3.tiff"), height=6, width=14)
+ggsave(p4, file = here("figures/telo-density_h4.tiff"), height=6, width=14)
+ggsave(p5, file = here("figures/telo-density_h5.tiff"), height=6, width=14)
+ggsave(p6, file = here("figures/telo-density_h6.tiff"), height=6, width=14)
+ggsave(p7, file = here("figures/telo-density_h7.tiff"), height=6, width=14)
+ggsave(p8, file = here("figures/telo-density_h8.tiff"), height=6, width=14)
+
