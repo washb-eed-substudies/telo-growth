@@ -23,7 +23,7 @@ weight_length_y1 <- round(quantile(d$whz_t2, na.rm=TRUE),2)
 headc_age_y1 <- round(quantile(d$hcz_t2, na.rm=TRUE),2)
 length_y2 <- round(quantile(d$laz_t3, na.rm=TRUE),2)
 weight_age_y2 <- round(quantile(d$waz_t3, na.rm=TRUE),2)
-weight_length_y2 <- round(quantile(d$whz_t3, na.rm=TRUE),2)
+weight_length_y2 <- format(round(quantile(d$whz_t3, na.rm=TRUE),2), nsmall=2)
 headc_age_y2 <- round(quantile(d$hcz_t3, na.rm=TRUE),2)
 d_y1 <- round(mean(d$diar7d_t2, na.rm=TRUE) * 100) #percentage
 d_y2 <- round(mean(d$diar7d_t3, na.rm=TRUE)* 100) #percentage
