@@ -157,7 +157,7 @@ tbl4 <- data.table(
         paste(hczy2h3adj$ATE[4], " (", hczy2h3adj$CI1[4], ", ", hczy2h3adj$CI2[4], ")", sep=""),
         " ",
         paste(lazh1adj$ATE[4], " (", lazh1adj$CI1[4], ", ", lazh1adj$CI2[4], ")", sep=""),
-        paste(wazh1adj$ATE[4], " (", wazh1adj$CI1[4], ", ", wazh1unadj$CI2[4], ")", sep=""),
+        paste(wazh1adj$ATE[4], " (", wazh1adj$CI1[4], ", ", wazh1adj$CI2[4], ")", sep=""),
         paste(wlzh1adj$ATE[4], " (", wlzh1adj$CI1[4], ", ", wlzh1adj$CI2[4], ")", sep=""),
         paste(hczh1adj$ATE[4], " (", hczh1adj$CI1[4], ", ", hczh1adj$CI2[4], ")", sep=""),
         " ",
