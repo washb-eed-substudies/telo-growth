@@ -138,7 +138,7 @@ tbl2 <- data.table(
         paste(weivadj$ATE[2], " (", weivadj$CI1[2], ", ", weivadj$CI2[2], ")", sep=""),
         paste(hcvadj$ATE[2], " (", hcvadj$CI1[2], ", ", hcvadj$CI2[2], ")", sep="")), 
   " "=c(" ", "P-value", as.character(lazy1adj$Pval[2]), as.character(wazy1adj$Pval[2]), as.character(wlzy1adj$Pval[2]), as.character(hczy1adj$Pval[2]), " ",
-        as.character(lazy2adj$Pval[2]), as.character(wazy2adj$Pval[2]), as.character(wlzy1adj$Pval[2]), as.character(hczy2adj$Pval[2]), " ",
+        as.character(lazy2adj$Pval[2]), as.character(wazy2adj$Pval[2]), as.character(wlzy2adj$Pval[2]), as.character(hczy2adj$Pval[2]), " ",
         as.character(lazadj$Pval[2]), as.character(wazadj$Pval[2]), as.character(wlzadj$Pval[2]), as.character(hczadj$Pval[2]), " ",
         as.character(lenvadj$Pval[2]), as.character(weivadj$Pval[2]), as.character(hcvadj$Pval[2])), 
   "T/S Ratio Year 1, Q3 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy1unadj$ATE[3], " (", lazy1unadj$CI1[3], ", ", lazy1unadj$CI2[3], ")", sep=""),
