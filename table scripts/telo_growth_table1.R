@@ -79,9 +79,9 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry at enrollment", " " = "He
                        "n (%) or median (25th percentile, 75th percentile)" = paste(heightm[3], " (", heightm[2], ", ", heightm[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Education", " " = "Schooling completed (years)", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(edumom[3], " (", edumom[2], ", ", edumom[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 1", " " = "CES-D score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 1", " " = "CESD-R score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(CES_D1[3], " (", CES_D1[2], ", ", CES_D1[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 2", " " = "CES-D score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 2", " " = "CESD-R score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(CES_D2[3], " (", CES_D2[2], ", ", CES_D2[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Perceived stress at Year 2", " " = "Perceived Stress Scale score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(PPS[3], " (", PPS[2], ", ", PPS[4], ")", sep="")), stringsAsFactors=FALSE)

@@ -20,8 +20,8 @@
 "19","Mother"," ","Age (years)","23 (20, 27)"
 "20"," ","Anthropometry at enrollment","Height (cm)","150.5 (147.1, 153.9)"
 "21"," ","Education","Schooling completed (years)","7 (4, 9)"
-"22"," ","Depression at Year 1","CES-D score","12 (9, 17)"
-"23"," ","Depression at Year 2","CES-D score","12 (9, 17)"
+"22"," ","Depression at Year 1","CESD-R score","12 (9, 17)"
+"23"," ","Depression at Year 2","CESD-R score","12 (9, 17)"
 "24"," ","Perceived stress at Year 2","Perceived Stress Scale score","14 (10, 18)"
 "25"," ","Physical, sexual, or emotional intimate partner violence","Any lifetime exposure: number of women (%)","398 (56%)"
 *The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)
