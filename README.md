@@ -5,7 +5,7 @@
 This is the repository for the WASH Benefits Bangladesh [NCT01590095](#https://clinicaltrials.gov/ct2/show/NCT01590095) telomere length and growth associations substudy. The primary analysis assessed the associations between telomere length as the exposure and various measures of growth such as length-for-age Z-score as outcomes. Post hoc analyses were conducted to examine the associations in the opposite direction. This repository contains scripts for both the primary and post hoc analyses as well as for generating tables and figures.
 
 ### Associated protocols and datasets
-The pre-specified analysis plan and the data required for the analysis will be available through the Open Science Framework:[https://osf.io/9snat/](https://osf.io/9snat/).
+The pre-specified analysis plan and the data required for the analysis will be available through the Open Science Framework: [https://osf.io/9snat/](https://osf.io/9snat/).
 
 ### WASH Benefits Package and tmleAb
 This analysis requires [washb](https://github.com/ben-arnold/washb), a package developed for WASH Benefits analyses. 
