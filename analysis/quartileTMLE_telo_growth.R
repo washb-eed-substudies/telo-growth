@@ -31,7 +31,7 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
-source(here::here("src/0-base-quartileTMLE_functions.R"))
+source(here::here("analysis/0-base-quartileTMLE_functions.R"))
 
 #Set seed to replicate with R versions less than 3.6.1
 RNGkind(sample.kind = "Rounding")
