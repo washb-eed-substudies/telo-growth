@@ -7,7 +7,7 @@ This is the repository for the WASH Benefits Bangladesh [NCT01590095](#https://c
 ### Associated protocols and datasets
 The pre-specified analysis plan and the data required for the analysis will be available through the Open Science Framework: [https://osf.io/9snat/](https://osf.io/9snat/).
 
-### WASH Benefits Package and tmleAb
+### WASH Benefits Package
 This analysis requires [washb](https://github.com/ben-arnold/washb), a package developed for WASH Benefits analyses. 
 
 For all scripts, you will need to change directory statements to reflect locations of files within your local directory. Changes will also need to be made to directory statements when saving output files such as results, tables, and figures.
