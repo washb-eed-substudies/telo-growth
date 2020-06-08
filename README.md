@@ -1,6 +1,6 @@
 # telo-growth
 
-### WASH Benefits Bangladesh Telomere Length and Growth Associations
+### WASH Benefits Bangladesh Telomere Length and Growth Associations 
 
 This is the repository for the WASH Benefits Bangladesh [NCT01590095](#https://clinicaltrials.gov/ct2/show/NCT01590095) telomere length and growth associations substudy. The primary analysis assessed the associations between telomere length as the exposure and various measures of growth such as length-for-age Z-score as outcomes. Post hoc analyses were conducted to examine the associations in the opposite direction. This repository contains scripts for both the primary and post hoc analyses as well as for generating tables and figures.
 
