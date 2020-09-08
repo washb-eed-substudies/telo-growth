@@ -113,6 +113,18 @@ levels(d$life_viol_any_t3)[length(levels(d$life_viol_any_t3))]<-"Missing"
 
 
 
+#Calculate ICC for manuscript
+icc.ts2<-ICCest(x=d$block, y=d$TS_t2, data = d, alpha = 0.05, CI.type = c("THD", "Smith"))
+icc.ts3<-ICCest(x=d$block, y=d$TS_t3, data = d, alpha = 0.05, CI.type = c("THD", "Smith"))
+icc.deltat.ts<-ICCest(x=d$block, y=d$delta_TS, data = d, alpha = 0.05, CI.type = c("THD", "Smith"))
+
+ICC <- rbind(
+  data.frame(measure="ts2",ICC=icc.ts2$ICC, LowerCI=  icc.ts2$LowerCI, UpperCI=  icc.ts2$UpperCI ),
+  data.frame(measure="ts3",ICC=icc.ts3$ICC, LowerCI=  icc.ts3$LowerCI, UpperCI=  icc.ts3$UpperCI ),
+  data.frame(measure="detla ts",ICC=icc.deltat.ts$ICC, LowerCI=  icc.deltat.ts$LowerCI, UpperCI=  icc.deltat.ts$UpperCI )
+)
+knitr::kable(ICC, format="markdown")
+
 #Hypothesis 1
 #The change in telomere length between Year 1 and Year 2 is associated with the change in child length-for-age Z score (LAZ), weight-for-age Z score (WAZ), weight-for-length Z score (WLZ), and head circumference-for-age Z score from Year 1 to Year 2.
 #Exposure: Quartiles of change in telomere length between Year 1 and Year 2
