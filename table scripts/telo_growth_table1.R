@@ -13,18 +13,18 @@ telo2med <- round(quantile(d$TS_t3, na.rm=TRUE),2)
 telo2bpmed <- round(quantile(d$ts_t3_bp, na.rm=TRUE))
 deltatsmed <- round(quantile(d$delta_TS, na.rm=TRUE),2)
 deltatsbpmed <- round(quantile(d$delta_ts_bp, na.rm=TRUE))
-length_m3 <- round(quantile(d$laz_t1, na.rm=TRUE),2)
-weight_age_m3 <- round(quantile(d$waz_t1, na.rm=TRUE),2)
-weight_length_m3 <- round(quantile(d$whz_t1, na.rm=TRUE),2)
-headc_age_m3 <- round(quantile(d$hcz_t1, na.rm=TRUE),2)
-length_y1 <- round(quantile(d$laz_t2, na.rm=TRUE),2)
-weight_age_y1 <- round(quantile(d$waz_t2, na.rm=TRUE),2)
-weight_length_y1 <- round(quantile(d$whz_t2, na.rm=TRUE),2)
-headc_age_y1 <- round(quantile(d$hcz_t2, na.rm=TRUE),2)
-length_y2 <- round(quantile(d$laz_t3, na.rm=TRUE),2)
-weight_age_y2 <- round(quantile(d$waz_t3, na.rm=TRUE),2)
-weight_length_y2 <- round(quantile(d$whz_t3, na.rm=TRUE),2)
-headc_age_y2 <- round(quantile(d$hcz_t3, na.rm=TRUE),2)
+length_m3 <- format(round(quantile(d$laz_t1, na.rm=TRUE),2), nsmall=2)
+weight_age_m3 <- format(round(quantile(d$waz_t1, na.rm=TRUE),2), nsmall=2)
+weight_length_m3 <- format(round(quantile(d$whz_t1, na.rm=TRUE),2), nsmall=2)
+headc_age_m3 <- format(round(quantile(d$hcz_t1, na.rm=TRUE),2), nsmall=2)
+length_y1 <- format(round(quantile(d$laz_t2, na.rm=TRUE),2), nsmall=2)
+weight_age_y1 <- format(round(quantile(d$waz_t2, na.rm=TRUE),2), nsmall=2)
+weight_length_y1 <- format(round(quantile(d$whz_t2, na.rm=TRUE),2), nsmall=2)
+headc_age_y1 <- format(round(quantile(d$hcz_t2, na.rm=TRUE),2), nsmall=2)
+length_y2 <- format(round(quantile(d$laz_t3, na.rm=TRUE),2), nsmall=2)
+weight_age_y2 <- format(round(quantile(d$waz_t3, na.rm=TRUE),2), nsmall=2)
+weight_length_y2 <- format(round(quantile(d$whz_t3, na.rm=TRUE),2), nsmall=2)
+headc_age_y2 <- format(round(quantile(d$hcz_t3, na.rm=TRUE),2), nsmall=2)
 d_y1 <- round(mean(d$diar7d_t2, na.rm=TRUE) * 100) #percentage
 d_y2 <- round(mean(d$diar7d_t3, na.rm=TRUE)* 100) #percentage
 agem <- round(quantile(d$momage, na.rm=TRUE))
@@ -79,13 +79,13 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry at enrollment", " " = "He
                        "n (%) or median (25th percentile, 75th percentile)" = paste(heightm[3], " (", heightm[2], ", ", heightm[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Education", " " = "Schooling completed (years)", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(edumom[3], " (", edumom[2], ", ", edumom[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 1", " " = "CES-D score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 1", " " = "CESD-R score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(CES_D1[3], " (", CES_D1[2], ", ", CES_D1[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 2", " " = "CES-D score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 2", " " = "CESD-R score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(CES_D2[3], " (", CES_D2[2], ", ", CES_D2[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Perceived stress at Year 2", " " = "Perceived Stress Scale score", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(PPS[3], " (", PPS[2], ", ", PPS[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Physical, sexual, or emotional intimate partner violence (%)", " " = "Any lifetime exposure: number of women", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Physical, sexual, or emotional intimate partner violence", " " = "Any lifetime exposure: number of women (%)", 
                        "n (%) or median (25th percentile, 75th percentile)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")), stringsAsFactors=FALSE)
 
 # export table as csv
