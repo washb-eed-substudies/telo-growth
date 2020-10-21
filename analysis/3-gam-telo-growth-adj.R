@@ -7,7 +7,8 @@ load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covari
 # Z-score telomere length
 d <- d %>%
   mutate(TS_t2_Z = scale(TS_t2, center=T, scale=T)[,1]) %>%
-  mutate(TS_t3_Z = scale(TS_t3, center=T, scale=T)[,1])
+  mutate(TS_t3_Z = scale(TS_t3, center=T, scale=T)[,1]) %>%
+  mutate(delta_TS_Z = scale(delta_TS, center=T, scale=T)[,1])
 
 
 #Loop over exposure-outcome pairs
@@ -47,7 +48,6 @@ for(i in 1:nrow(H1_adj_models)){
   preds <- predict_gam_diff(fit=H1_adj_models$fit[i][[1]], d=H1_adj_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
   H1_adj_res <-  bind_rows(H1_adj_res , preds$res)
 }
-H1_adj_res$adjusted <- 0
 
 #Make list of plots
 H1_adj_plot_list <- NULL
@@ -108,7 +108,6 @@ for(i in 1:nrow(H2_adj_models)){
   preds <- predict_gam_diff(fit=H2_adj_models$fit[i][[1]], d=H2_adj_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
   H2_adj_res <-  bind_rows(H2_adj_res , preds$res)
 }
-H2_adj_res$adjusted <- 0
 
 #Make list of plots
 H2_plot_list <- NULL
@@ -138,7 +137,7 @@ saveRDS(H2_adj_res, here("results/gam_results/adjusted/H2_adj_res.RDS"))
 
 #### Association between change in telomere length between years 1 and 2 and growth ####
 # immune ratios at y1 and growth velocity outcomes between y1 and y2
-Xvars <- c("delta_TS")            
+Xvars <- c("delta_TS", "delta_TS_Z")            
 Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
            "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
            "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
@@ -169,7 +168,6 @@ for(i in 1:nrow(H3_adj_models)){
   preds <- predict_gam_diff(fit=H3_adj_models$fit[i][[1]], d=H3_adj_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
   H3_adj_res <-  bind_rows(H3_adj_res , preds$res)
 }
-H3_adj_res$adjusted <- 0
 
 #Make list of plots
 H3_plot_list <- NULL
@@ -194,4 +192,29 @@ saveRDS(H3_adj_res, here("results/gam_results/adjusted/H3_adj_res.RDS"))
 
 #Save plot data
 #saveRDS(H3_plot_data, paste0(dropboxDir,"results/stress-growth-models/figure-data/H3_adj_spline_data.RDS"))
+
+
+
+# Adjust for BH
+# BH for raw telomere length analyses
+full_res <- rbind(filter(H1_adj_res, X=="TS_t2"), filter(H2_adj_res, X=="TS_t3"), 
+                  filter(H3_adj_res, X=="delta_TS"))
+full_res$corrected.Pval <- p.adjust(full_res[['Pval']], method="BH")
+
+H1_corr_res<-full_res[1:nrow(filter(H1_adj_res, X=="TS_t2")),]
+H2_corr_res<-full_res[(nrow(filter(H1_adj_res, X=="TS_t2"))+1):(nrow(filter(H1_adj_res, X=="TS_t2"))+nrow(filter(H2_adj_res, X=="TS_t3"))),]
+H3_corr_res<-full_res[(nrow(filter(H1_adj_res, X=="TS_t2"))+nrow(filter(H2_adj_res, X=="TS_t3"))+1):(nrow(filter(H1_adj_res, X=="TS_t2"))+nrow(filter(H2_adj_res, X=="TS_t3"))+nrow(filter(H3_adj_res, X=="delta_TS"))),]
+
+# BH for Z-score telomere length analyses
+full_res <- rbind(filter(H1_adj_res, X=="TS_t2_Z"), filter(H2_adj_res, X=="TS_t3_Z"), 
+                  filter(H3_adj_res, X=="delta_TS_Z"))
+full_res$corrected.Pval <- p.adjust(full_res[['Pval']], method="BH")
+
+H1_corr_res<-rbind(H1_corr_res, full_res[1:nrow(filter(H1_adj_res, X=="TS_t2_Z")),])
+H2_corr_res<-rbind(H2_corr_res, full_res[(nrow(filter(H1_adj_res, X=="TS_t2_Z"))+1):(nrow(filter(H1_adj_res, X=="TS_t2_Z"))+nrow(filter(H2_adj_res, X=="TS_t3_Z"))),])
+H3_corr_res<-rbind(H3_corr_res, full_res[(nrow(filter(H1_adj_res, X=="TS_t2_Z"))+nrow(filter(H2_adj_res, X=="TS_t3_Z"))+1):(nrow(filter(H1_adj_res, X=="TS_t2_Z"))+nrow(filter(H2_adj_res, X=="TS_t3_Z"))+nrow(filter(H3_adj_res, X=="delta_TS_Z"))),])
+
+saveRDS(H1_corr_res, here("results/gam_results/adjusted/H1_adj_res.RDS"))
+saveRDS(H2_corr_res, here("results/gam_results/adjusted/H2_adj_res.RDS"))
+saveRDS(H3_corr_res, here("results/gam_results/adjusted/H3_adj_res.RDS"))
 
