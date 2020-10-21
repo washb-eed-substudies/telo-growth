@@ -43,12 +43,12 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
       adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
       if (j==1){
         tbl <- rbind(tbl, list(expo_var[i], out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
       }else {
         tbl <- rbind(tbl, list("", out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
       }
     }
     if (i != length(exposure)) {
@@ -82,12 +82,12 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
       adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
       if (j==1){
         tbl <- rbind(tbl, list(expo_var[i], out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
       }else {
         tbl <- rbind(tbl, list(" ", out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
       }
     }
     if (i != length(exposure)) {
@@ -140,7 +140,7 @@ tbl1flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H1
 
 exposure <- c("TS_t3", "TS_t3_Z")
 outcome <- c("laz_t3", "waz_t3", "whz_t3" ,"hcz_t3")
-expo_var <- c("Telomere length at Year 2", "Z-score of telomere length at Year 1")
+expo_var <- c("Telomere length at Year 2", "Z-score of telomere length at Year 2")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2")
 
 tbl2 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj)
@@ -149,11 +149,11 @@ tbl2flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H2
 
 #### GAM Table 3 ####
 
-exposure <- c("delta_TS")
+exposure <- c("delta_TS", "delta_TS_Z")
 outcome <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
              "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
              "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
-expo_var <- c("Change in telomere length between Year 1 and Year 2")
+expo_var <- c("Change in telomere length between Year 1 and Year 2", "Z-score change in telomere length between Year 1 and Year 2")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2", 
              "Change in LAZ between Year 1 and Year 2", "Change in WAZ between Year 1 and Year 2", 
              "Change in WLZ between Year 1 and Year 2", "Change in HCZ between Year 1 and Year 2",
@@ -168,8 +168,8 @@ tbl3flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H3
 
 #### SAVE TABLES ####
 
-write.csv(tbl1, file=here("tables/gam/stress-growth-table1.csv"))
-write.csv(tbl2, here('tables/gam/stress-growth-table2.csv'))
-write.csv(tbl3, here('tables/gam/stress-growth-table3.csv'))
+write.csv(tbl1, file=here("tables/gam/telo-growth-table1.csv"))
+write.csv(tbl2, here('tables/gam/telo-growth-table2.csv'))
+write.csv(tbl3, here('tables/gam/telo-growth-table3.csv'))
 
 save_as_docx("Table 1" = tbl1flex, "Table 2" = tbl2flex, "Table 3" = tbl3flex, path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/GAM Tables.docx")
