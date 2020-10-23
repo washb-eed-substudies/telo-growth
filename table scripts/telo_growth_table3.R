@@ -1,7 +1,7 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
-load(here("results/telo_growth_results.Rdata"))
+load(here("results/telo_growth_results_BH.Rdata"))
 load(here("results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
@@ -12,17 +12,17 @@ round_df <- function(df, digits) {
   
   (df)
 }
-h5unadj.res <- round_df(h5unadj.res, 2)
-h5adj.res <- round_df(h5adj.res, 2)
+h5unadj <- round_df(h5unadj, 2)
+h5adj <- round_df(h5adj, 2)
 
-lazy2h5unadj <- filter(h5unadj.res, Y == "laz_t3")
-lazy2h5adj <- filter(h5adj.res, Y == "laz_t3")
-wazy2h5unadj <- filter(h5unadj.res, Y == "waz_t3")
-wazy2h5adj <- filter(h5adj.res, Y == "waz_t3")
-wlzy2h5unadj <- filter(h5unadj.res, Y == "whz_t3")
-wlzy2h5adj <- filter(h5adj.res, Y == "whz_t3")
-hczy2h5unadj <- filter(h5unadj.res, Y == "hcz_t3")
-hczy2h5adj <- filter(h5adj.res, Y == "hcz_t3")
+lazy2h5unadj <- filter(h5unadj, Y == "laz_t3")
+lazy2h5adj <- filter(h5adj, Y == "laz_t3")
+wazy2h5unadj <- filter(h5unadj, Y == "waz_t3")
+wazy2h5adj <- filter(h5adj, Y == "waz_t3")
+wlzy2h5unadj <- filter(h5unadj, Y == "whz_t3")
+wlzy2h5adj <- filter(h5adj, Y == "whz_t3")
+hczy2h5unadj <- filter(h5unadj, Y == "hcz_t3")
+hczy2h5adj <- filter(h5adj, Y == "hcz_t3")
 
 Nlazy2h5 <- as.character(nrow(h5_laz_t3_vs_ts_t3gam.res))
 Nwazy2h5<- as.character(nrow(h5_waz_t3_vs_ts_t3gam.res))
@@ -41,39 +41,39 @@ tbl3 <- data.table(
                                   paste(wazy2h5unadj$ATE[2], " (", wazy2h5unadj$CI1[2], ", ", wazy2h5unadj$CI2[2], ")", sep=""),
                                   paste(wlzy2h5unadj$ATE[2], " (", wlzy2h5unadj$CI1[2], ", ", wlzy2h5unadj$CI2[2], ")", sep=""),
                                   paste(hczy2h5unadj$ATE[2], " (", hczy2h5unadj$CI1[2], ", ", hczy2h5unadj$CI2[2], ")", sep="")), 
-  " "=c(" ", "P-value", as.character(lazy2h5unadj$Pval[2]), as.character(wazy2h5unadj$Pval[2]), as.character(wlzy2h5unadj$Pval[2]), as.character(hczy2h5unadj$Pval[2])), 
+  " "=c(" ", "P-value", as.character(lazy2h5unadj$BH.Pval[2]), as.character(wazy2h5unadj$BH.Pval[2]), as.character(wlzy2h5unadj$BH.Pval[2]), as.character(hczy2h5unadj$BH.Pval[2])), 
   " "=c("Fully adjusted", "Coefficient (95% CI)", paste(lazy2h5adj$ATE[2], " (", lazy2h5adj$CI1[2], ", ", lazy2h5adj$CI2[2], ")", sep=""),
         paste(wazy2h5adj$ATE[2], " (", wazy2h5adj$CI1[2], ", ", wazy2h5adj$CI2[2], ")", sep=""),
         paste(wlzy2h5adj$ATE[2], " (", wlzy2h5adj$CI1[2], ", ", wlzy2h5adj$CI2[2], ")", sep=""),
         paste(hczy2h5adj$ATE[2], " (", hczy2h5adj$CI1[2], ", ", hczy2h5adj$CI2[2], ")", sep="")), 
-  " "=c(" ", "P-value", as.character(lazy2h5adj$Pval[2]), as.character(wazy2h5adj$Pval[2]), as.character(wlzy2h5adj$Pval[2]), as.character(hczy2h5adj$Pval[2])), 
+  " "=c(" ", "P-value", as.character(lazy2h5adj$BH.Pval[2]), as.character(wazy2h5adj$BH.Pval[2]), as.character(wlzy2h5adj$BH.Pval[2]), as.character(hczy2h5adj$BH.Pval[2])), 
   "T/S Ratio Year 2, Q3 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h5unadj$ATE[3], " (", lazy2h5unadj$CI1[3], ", ", lazy2h5unadj$CI2[3], ")", sep=""),
                                   paste(wazy2h5unadj$ATE[3], " (", wazy2h5unadj$CI1[3], ", ", wazy2h5unadj$CI2[3], ")", sep=""),
                                   paste(wlzy2h5unadj$ATE[3], " (", wlzy2h5unadj$CI1[3], ", ", wlzy2h5unadj$CI2[3], ")", sep=""),
                                   paste(hczy2h5unadj$ATE[3], " (", hczy2h5unadj$CI1[3], ", ", hczy2h5unadj$CI2[3], ")", sep="")), 
-  " "=c(" ", "P-value", as.character(lazy2h5unadj$Pval[3]), as.character(wazy2h5unadj$Pval[3]), as.character(wlzy2h5unadj$Pval[3]), as.character(hczy2h5unadj$Pval[3])),
+  " "=c(" ", "P-value", as.character(lazy2h5unadj$BH.Pval[3]), as.character(wazy2h5unadj$BH.Pval[3]), as.character(wlzy2h5unadj$BH.Pval[3]), as.character(hczy2h5unadj$BH.Pval[3])),
   " "=c("Fully adjusted", "Coefficient (95% CI)", paste(lazy2h5adj$ATE[3], " (", lazy2h5adj$CI1[3], ", ", lazy2h5adj$CI2[3], ")", sep=""),
         paste(wazy2h5adj$ATE[3], " (", wazy2h5adj$CI1[3], ", ", wazy2h5adj$CI2[3], ")", sep=""),
         paste(wlzy2h5adj$ATE[3], " (", wlzy2h5adj$CI1[3], ", ", wlzy2h5adj$CI2[3], ")", sep=""),
         paste(hczy2h5adj$ATE[3], " (", hczy2h5adj$CI1[3], ", ", hczy2h5adj$CI2[3], ")", sep="")),
-  " "=c(" ", "P-value", as.character(lazy2h5adj$Pval[3]), as.character(wazy2h5adj$Pval[3]), as.character(wlzy2h5adj$Pval[3]), as.character(hczy2h5adj$Pval[3])),
+  " "=c(" ", "P-value", as.character(lazy2h5adj$BH.Pval[3]), as.character(wazy2h5adj$BH.Pval[3]), as.character(wlzy2h5adj$BH.Pval[3]), as.character(hczy2h5adj$BH.Pval[3])),
   "T/S Ratio Year 2, Q4 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h5unadj$ATE[4], " (", lazy2h5unadj$CI1[4], ", ", lazy2h5unadj$CI2[4], ")", sep=""),
                                   paste(wazy2h5unadj$ATE[4], " (", wazy2h5unadj$CI1[4], ", ", wazy2h5unadj$CI2[4], ")", sep=""),
                                   paste(wlzy2h5unadj$ATE[4], " (", wlzy2h5unadj$CI1[4], ", ", wlzy2h5unadj$CI2[4], ")", sep=""),
                                   paste(hczy2h5unadj$ATE[4], " (", hczy2h5unadj$CI1[4], ", ", hczy2h5unadj$CI2[4], ")", sep="")),
-  " "=c(" ", "P-value", as.character(lazy2h5unadj$Pval[4]), as.character(wazy2h5unadj$Pval[4]), as.character(wlzy2h5unadj$Pval[4]), as.character(hczy2h5unadj$Pval[4])),
+  " "=c(" ", "P-value", as.character(lazy2h5unadj$BH.Pval[4]), as.character(wazy2h5unadj$BH.Pval[4]), as.character(wlzy2h5unadj$BH.Pval[4]), as.character(hczy2h5unadj$BH.Pval[4])),
   " "=c("Fully adjusted", "Coefficient (95% CI)", paste(lazy2h5adj$ATE[4], " (", lazy2h5adj$CI1[4], ", ", lazy2h5adj$CI2[4], ")", sep=""),
         paste(wazy2h5adj$ATE[4], " (", wazy2h5adj$CI1[4], ", ", wazy2h5adj$CI2[4], ")", sep=""),
         paste(wlzy2h5adj$ATE[4], " (", wlzy2h5adj$CI1[4], ", ", wlzy2h5adj$CI2[4], ")", sep=""),
         paste(hczy2h5adj$ATE[4], " (", hczy2h5adj$CI1[4], ", ", hczy2h5adj$CI2[4], ")", sep="")),
-  " "=c(" ", "P-value", as.character(lazy2h5adj$Pval[4]), as.character(wazy2h5adj$Pval[4]), as.character(wlzy2h5adj$Pval[4]), as.character(hczy2h5adj$Pval[4]))
+  " "=c(" ", "P-value", as.character(lazy2h5adj$BH.Pval[4]), as.character(wazy2h5adj$BH.Pval[4]), as.character(wlzy2h5adj$BH.Pval[4]), as.character(hczy2h5adj$BH.Pval[4]))
 )
 
 #Add quartile cutpoints
-Q1 <- h5unadj.res$cutpoints[1]
-Q2 <- h5unadj.res$cutpoints[2]
-Q3 <- h5unadj.res$cutpoints[3]
-Q4 <- h5unadj.res$cutpoints[4]
+Q1 <- h5unadj$cutpoints[1]
+Q2 <- h5unadj$cutpoints[2]
+Q3 <- h5unadj$cutpoints[3]
+Q4 <- h5unadj$cutpoints[4]
 
 colnames(tbl3)
 colnames(tbl3)[7] <- paste0("T/S Ratio Year 2,\nQuartile 2: ",Q2," vs. Quartile 1: ",Q1)
