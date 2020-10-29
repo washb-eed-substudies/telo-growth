@@ -140,6 +140,9 @@ Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3",
            "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
            "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
 
+
+
+
 #Fit models
 H3_models <- NULL
 for(i in Xvars){
