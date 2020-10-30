@@ -172,4 +172,4 @@ write.csv(tbl1, file=here("tables/gam/telo-growth-table1.csv"))
 write.csv(tbl2, here('tables/gam/telo-growth-table2.csv'))
 write.csv(tbl3, here('tables/gam/telo-growth-table3.csv'))
 
-save_as_docx("Table 1" = tbl1flex, "Table 2" = tbl2flex, "Table 3" = tbl3flex, path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/GAM Tables.docx")
+save_as_docx("Table 1" = tbl1flex, "Table 2" = tbl2flex, "Table 3" = tbl3flex, path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/GAM Tables v2.docx")

@@ -1,7 +1,9 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
-load(here("results/telo_growth_results_BH.Rdata"))
+#load results/telo_growth_results_BH.Rdata for new version of R
+#load results/telo_growth_results_BH_Audrie_R.Rdata for Audrie's old version of R
+load(here("results/telo_growth_results_BH_Audrie_R.Rdata"))
 load(here("results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
@@ -82,7 +84,7 @@ colnames(tbl3)[15] <- paste0("T/S Ratio Year 2,\nQuartile 4: ",Q4," vs. Quartile
 
 
 
-write.csv(tbl3, file=here("tables/main/telo_growth_table3.csv"))
-print(xtable(tbl3), type="html", file=here("tables/main/telo_growth_table3.html"))
+write.csv(tbl3, file=here("tables/main/telo_growth_table3_Rold.csv"))
+print(xtable(tbl3), type="html", file=here("tables/main/telo_growth_table3_Rold.html"))
 
 
