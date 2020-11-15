@@ -185,27 +185,3 @@ saveRDS(H3_res, here("results/gam_results/unadjusted/H3_res.RDS"))
 #Save plot data
 #saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
 
-
-# Adjust for BH
-# BH for raw telomere length analyses
-full_res <- rbind(filter(H1_res, X=="TS_t2"), filter(H2_res, X=="TS_t3"), 
-                 filter(H3_res, X=="delta_TS"))
-full_res$corrected.Pval <- p.adjust(full_res[['Pval']], method="BH")
-
-H1_corr_res<-full_res[1:nrow(filter(H1_res, X=="TS_t2")),]
-H2_corr_res<-full_res[(nrow(filter(H1_res, X=="TS_t2"))+1):(nrow(filter(H1_res, X=="TS_t2"))+nrow(filter(H2_res, X=="TS_t3"))),]
-H3_corr_res<-full_res[(nrow(filter(H1_res, X=="TS_t2"))+nrow(filter(H2_res, X=="TS_t3"))+1):(nrow(filter(H1_res, X=="TS_t2"))+nrow(filter(H2_res, X=="TS_t3"))+nrow(filter(H3_res, X=="delta_TS"))),]
-
-# BH for Z-score telomere length analyses
-full_res <- rbind(filter(H1_res, X=="TS_t2_Z"), filter(H2_res, X=="TS_t3_Z"), 
-                  filter(H3_res, X=="delta_TS_Z"))
-full_res$corrected.Pval <- p.adjust(full_res[['Pval']], method="BH")
-
-H1_corr_res<-rbind(H1_corr_res, full_res[1:nrow(filter(H1_res, X=="TS_t2_Z")),])
-H2_corr_res<-rbind(H2_corr_res, full_res[(nrow(filter(H1_res, X=="TS_t2_Z"))+1):(nrow(filter(H1_res, X=="TS_t2_Z"))+nrow(filter(H2_res, X=="TS_t3_Z"))),])
-H3_corr_res<-rbind(H3_corr_res, full_res[(nrow(filter(H1_res, X=="TS_t2_Z"))+nrow(filter(H2_res, X=="TS_t3_Z"))+1):(nrow(filter(H1_res, X=="TS_t2_Z"))+nrow(filter(H2_res, X=="TS_t3_Z"))+nrow(filter(H3_res, X=="delta_TS_Z"))),])
-
-saveRDS(H1_corr_res, here("results/gam_results/unadjusted/H1_res.RDS"))
-saveRDS(H2_corr_res, here("results/gam_results/unadjusted/H2_res.RDS"))
-saveRDS(H3_corr_res, here("results/gam_results/unadjusted/H3_res.RDS"))
-
