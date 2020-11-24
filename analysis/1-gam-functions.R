@@ -207,7 +207,7 @@ predict_gam_diff <- function(fit, d, quantile_diff=c(0.25,0.75), Xvar, Yvar){
   Zval <-  abs(point.diff/se.diff)
   Pval <- exp(-0.717*Zval - 0.416*Zval^2)
   
-  plotdf<-data.frame(Y=Yvar, X= Xvar, q1=d$X[q1_pos], q3=d$X[q3_pos], 
+  plotdf<-data.frame(Y=Yvar, x=d$X, X= Xvar, q1=d$X[q1_pos], q3=d$X[q3_pos], 
                      pred.q1=preds[q1_pos], pred.q3=preds[q3_pos], 
                      point.diff, lb.diff=lb.diff, ub.diff=ub.diff, Pval=Pval)
   
