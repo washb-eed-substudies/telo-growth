@@ -6,12 +6,12 @@ source(here::here("0-config.R"))
 
 # load enrollment characteristics and results
 load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
-H1 <- readRDS(here('results/gam_results/unadjusted/H1_res.RDS'))
-H2 <- readRDS(here('results/gam_results/unadjusted/H2_res.RDS'))
-H3 <- readRDS(here('results/gam_results/unadjusted/H3_res.RDS'))
-H1adj <- readRDS(here('results/gam_results/adjusted/H1_adj_res.RDS'))
-H2adj <- readRDS(here('results/gam_results/adjusted/H2_adj_res.RDS'))
-H3adj <- readRDS(here('results/gam_results/adjusted/H3_adj_res.RDS'))
+H1 <- readRDS(here('results/gam_results/unadjusted/H1_res_BH.RDS'))
+H2 <- readRDS(here('results/gam_results/unadjusted/H2_res_BH.RDS'))
+H3 <- readRDS(here('results/gam_results/unadjusted/H3_res_BH.RDS'))
+H1adj <- readRDS(here('results/gam_results/adjusted/H1_adj_res_BH.RDS'))
+H2adj <- readRDS(here('results/gam_results/adjusted/H2_adj_res_BH.RDS'))
+H3adj <- readRDS(here('results/gam_results/adjusted/H3_adj_res_BH.RDS'))
 
 
 #### Functions for growth tables ####
@@ -27,12 +27,12 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
   ### this function produces a table that can be saved as a csv
   
   tbl <- data.table(" " = character(), " " = character(), " " = character(), " " = character(),
-                    " Outcome, Q3 v. Q1" = character(), " " = character(), " " = character(), " " = character(), 
+                    " Outcome, 90th pctl v. 10th pctl" = character(), " " = character(), " " = character(), " " = character(), 
                     " " = character(), " " = character(), " " = character(), " " = character())
   tbl <- rbind(tbl, list(" ", " ", " ", " ", "Unadjusted", " ", " ", " ", "Fully adjusted", " ", " ", " "))
-  tbl <- rbind(tbl, list(" ", "Outcome", "Q1 Mean", "Q3 Mean", 
-                         "Predicted Outcome at Q1", "Predicted Outcome at Q3", "Coefficient (95% CI)", "P-value", 
-                         "Predicted Outcome at Q1", "Predicted Outcome at Q3", "Coefficient (95% CI)", "P-value"))
+  tbl <- rbind(tbl, list(" ", "Outcome", "10th pctl Mean", "90th pctl Mean", 
+                         "Predicted Outcome at 10th pctl", "Predicted Outcome at 90th pctl", "Coefficient (95% CI)", "P-value", 
+                         "Predicted Outcome at 10th pctl", "Predicted Outcome at 90th pctl", "Coefficient (95% CI)", "P-value"))
   for (i in 1:length(exposure)) {
     for (j in 1:length(outcome)) {
       exp <- exposure[i]
@@ -43,12 +43,12 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
       adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
       if (j==1){
         tbl <- rbind(tbl, list(expo_var[i], out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$BH.Pval, 2)))
       }else {
         tbl <- rbind(tbl, list("", out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$BH.Pval, 2)))
       }
     }
     if (i != length(exposure)) {
@@ -82,12 +82,12 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
       adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
       if (j==1){
         tbl <- rbind(tbl, list(expo_var[i], out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$BH.Pval, 2)))
       }else {
         tbl <- rbind(tbl, list(" ", out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$BH.Pval, 2)))
       }
     }
     if (i != length(exposure)) {
@@ -98,12 +98,12 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
   # format for export
   flextbl<-flextable(tbl, col_keys=names(tbl))
   flextbl <- set_header_labels(flextbl,
-                               values = list("V1" = name, "V2" = "Outcome", "V3" = "Q1 Mean", "V4" = "Q3 Mean",
-                                             "V5" = "Predicted Outcome at Q1", "V6" = "Predicted Outcome at Q3", "V7" = "Coefficient (95% CI)", "V8" = "P-value",
-                                             "V9" = "Predicted Outcome at Q1", "V10" = "Predicted Outcome at Q3", "V11" = "Coefficient (95% CI)", "V12" = "P-value"))
+                               values = list("V1" = name, "V2" = "Outcome", "V3" = "10th pct1 Mean", "V4" = "90th pctl Mean",
+                                             "V5" = "Predicted Outcome at 10th pctl", "V6" = "Predicted Outcome at 90th pctl", "V7" = "Coefficient (95% CI)", "V8" = "P-value",
+                                             "V9" = "Predicted Outcome at 10th pctl", "V10" = "Predicted Outcome at 90th pctl", "V11" = "Coefficient (95% CI)", "V12" = "P-value"))
   flextbl <- add_header_row(flextbl, values = c("","","","", "Unadjusted", "Fully adjusted"), colwidths=c(1,1,1,1,4,4))
   # flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
-  flextbl <- add_header_row(flextbl, values = c("","","","", "Outcome, Q3 v. Q1"), colwidths=c(1,1,1,1,8))
+  flextbl <- add_header_row(flextbl, values = c("","","","", "Outcome, 90th pctl v. 10th pctl"), colwidths=c(1,1,1,1,8))
   # flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
   flextbl <- hline(flextbl, part="header", border=fp_border(color="black"))
   flextbl <- hline_bottom(flextbl, part="body", border=fp_border(color="black"))
@@ -172,4 +172,4 @@ write.csv(tbl1, file=here("tables/gam/telo-growth-table1.csv"))
 write.csv(tbl2, here('tables/gam/telo-growth-table2.csv'))
 write.csv(tbl3, here('tables/gam/telo-growth-table3.csv'))
 
-save_as_docx("Table 1" = tbl1flex, "Table 2" = tbl2flex, "Table 3" = tbl3flex, path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/GAM Tables.docx")
+save_as_docx("Table 1" = tbl1flex, "Table 2" = tbl2flex, "Table 3" = tbl3flex, path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/GAM Tables v3.docx")

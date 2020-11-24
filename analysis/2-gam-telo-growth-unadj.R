@@ -16,7 +16,7 @@ d <- d %>%
 #res_unadj <- fit_RE_gam(d=d, X="t3_cort_z01", Y="laz_t3",  W=NULL)
 
 #Get predictions of differences from the 25th percentile of exposure
-#preds_unadj <- predict_gam_diff(fit=res_unadj$fit, d=res_unadj$dat, quantile_diff=c(0.25,0.75), Xvar="delta_TS", Yvar="laz_t3")
+#preds_unadj <- predict_gam_diff(fit=res_unadj$fit, d=res_unadj$dat, quantile_diff=c(0.10,0.90), Xvar="delta_TS", Yvar="laz_t3")
 
 
 #Primary parameter we are estimating: difference between 25th and 75th percentile of the exposure
@@ -54,7 +54,7 @@ for(i in Xvars){
 H1_res <- NULL
 for(i in 1:nrow(H1_models)){
   res <- data.frame(X=H1_models$X[i], Y=H1_models$Y[i])
-  preds <- predict_gam_diff(fit=H1_models$fit[i][[1]], d=H1_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  preds <- predict_gam_diff(fit=H1_models$fit[i][[1]], d=H1_models$dat[i][[1]], quantile_diff=c(0.10,0.90), Xvar=res$X, Yvar=res$Y)
   H1_res <-  bind_rows(H1_res , preds$res)
 }
 
@@ -103,7 +103,7 @@ for(i in Xvars){
 H2_res <- NULL
 for(i in 1:nrow(H2_models)){
   res <- data.frame(X=H2_models$X[i], Y=H2_models$Y[i])
-  preds <- predict_gam_diff(fit=H2_models$fit[i][[1]], d=H2_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  preds <- predict_gam_diff(fit=H2_models$fit[i][[1]], d=H2_models$dat[i][[1]], quantile_diff=c(0.10,0.90), Xvar=res$X, Yvar=res$Y)
   H2_res <-  bind_rows(H2_res , preds$res)
 }
 
@@ -157,7 +157,7 @@ for(i in Xvars){
 H3_res <- NULL
 for(i in 1:nrow(H3_models)){
   res <- data.frame(X=H3_models$X[i], Y=H3_models$Y[i])
-  preds <- predict_gam_diff(fit=H3_models$fit[i][[1]], d=H3_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  preds <- predict_gam_diff(fit=H3_models$fit[i][[1]], d=H3_models$dat[i][[1]], quantile_diff=c(0.10,0.90), Xvar=res$X, Yvar=res$Y)
   H3_res <-  bind_rows(H3_res , preds$res)
 }
 
@@ -184,28 +184,4 @@ saveRDS(H3_res, here("results/gam_results/unadjusted/H3_res.RDS"))
 
 #Save plot data
 #saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
-
-
-# Adjust for BH
-# BH for raw telomere length analyses
-full_res <- rbind(filter(H1_res, X=="TS_t2"), filter(H2_res, X=="TS_t3"), 
-                 filter(H3_res, X=="delta_TS"))
-full_res$corrected.Pval <- p.adjust(full_res[['Pval']], method="BH")
-
-H1_corr_res<-full_res[1:nrow(filter(H1_res, X=="TS_t2")),]
-H2_corr_res<-full_res[(nrow(filter(H1_res, X=="TS_t2"))+1):(nrow(filter(H1_res, X=="TS_t2"))+nrow(filter(H2_res, X=="TS_t3"))),]
-H3_corr_res<-full_res[(nrow(filter(H1_res, X=="TS_t2"))+nrow(filter(H2_res, X=="TS_t3"))+1):(nrow(filter(H1_res, X=="TS_t2"))+nrow(filter(H2_res, X=="TS_t3"))+nrow(filter(H3_res, X=="delta_TS"))),]
-
-# BH for Z-score telomere length analyses
-full_res <- rbind(filter(H1_res, X=="TS_t2_Z"), filter(H2_res, X=="TS_t3_Z"), 
-                  filter(H3_res, X=="delta_TS_Z"))
-full_res$corrected.Pval <- p.adjust(full_res[['Pval']], method="BH")
-
-H1_corr_res<-rbind(H1_corr_res, full_res[1:nrow(filter(H1_res, X=="TS_t2_Z")),])
-H2_corr_res<-rbind(H2_corr_res, full_res[(nrow(filter(H1_res, X=="TS_t2_Z"))+1):(nrow(filter(H1_res, X=="TS_t2_Z"))+nrow(filter(H2_res, X=="TS_t3_Z"))),])
-H3_corr_res<-rbind(H3_corr_res, full_res[(nrow(filter(H1_res, X=="TS_t2_Z"))+nrow(filter(H2_res, X=="TS_t3_Z"))+1):(nrow(filter(H1_res, X=="TS_t2_Z"))+nrow(filter(H2_res, X=="TS_t3_Z"))+nrow(filter(H3_res, X=="delta_TS_Z"))),])
-
-saveRDS(H1_corr_res, here("results/gam_results/unadjusted/H1_res.RDS"))
-saveRDS(H2_corr_res, here("results/gam_results/unadjusted/H2_res.RDS"))
-saveRDS(H3_corr_res, here("results/gam_results/unadjusted/H3_res.RDS"))
 
