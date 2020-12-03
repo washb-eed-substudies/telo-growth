@@ -30,7 +30,6 @@ plot_gam_diff <- function(plotdf){
 
 
 
-
 fit_RE_gam <- function(d, Y, X, W=NULL, V=NULL, id="clusterid", family = "gaussian", pval = 0.2, print=TRUE){
   
   if(!is.null(W)){
@@ -124,27 +123,52 @@ fit_RE_gam <- function(d, Y, X, W=NULL, V=NULL, id="clusterid", family = "gaussi
     }else{
       eq_fact=NULL
     }
+    
+    #---------------------------------
     #fit model
+    #---------------------------------
     
-    if(!is.null(V)){
-      form <- paste0("Y~s(X, bs=\"cr\")+",eq_fact," +",eq_num,"+ s(id,bs=\"re\",by=dummy)")
-      form <- gsub("+ +","+",form, fixed=TRUE)
-      equation <- as.formula(form)
+    #Check if X is binary or continious
+    if(length(unique(d$X))>4){
+      if(!is.null(V)){
+        form <- paste0("Y~s(X, bs=\"cr\")+",eq_fact," +",eq_num,"+ s(id,bs=\"re\",by=dummy)")
+        form <- gsub("+ +","+",form, fixed=TRUE)
+        equation <- as.formula(form)
+      }else{
+        form <- paste0("Y~s(X, bs=\"cr\")+",eq_fact," +",eq_num,"+ s(id,bs=\"re\",by=dummy)")
+        form <- gsub("+ +","+",form, fixed=TRUE)
+        equation <- as.formula(form)
+      }
     }else{
-      form <- paste0("Y~s(X, bs=\"cr\")+",eq_fact," +",eq_num,"+ s(id,bs=\"re\",by=dummy)")
-      form <- gsub("+ +","+",form, fixed=TRUE)
-      equation <- as.formula(form)
+      if(!is.null(V)){
+        form <- paste0("Y~X+",eq_fact," +",eq_num,"+ s(id,bs=\"re\",by=dummy)")
+        form <- gsub("+ +","+",form, fixed=TRUE)
+        equation <- as.formula(form)
+      }else{
+        form <- paste0("Y~X+",eq_fact," +",eq_num,"+ s(id,bs=\"re\",by=dummy)")
+        form <- gsub("+ +","+",form, fixed=TRUE)
+        equation <- as.formula(form)
+      }
     }
-    
     fit <- mgcv::gam(formula = equation,data=d)
   }else{
-    if(!is.null(V)){
-      equation <- as.formula(paste0("Y~s(X, bs=\"cr\")+ V + X*V + s(id,bs=\"re\",by=dummy)"))
-      fit <- mgcv::gam(formula = equation,data=d)
-      
+    
+    if(length(unique(d$X))>2){
+      if(!is.null(V)){
+        equation <- as.formula(paste0("Y~s(X, bs=\"cr\")+ V + X*V + s(id,bs=\"re\",by=dummy)"))
+        fit <- mgcv::gam(formula = equation,data=d)
+        
+      }else{
+        fit <- mgcv::gam(Y~s(X, bs="cr")+s(id,bs="re",by=dummy),data=d)
+      }
     }else{
-      fit <- mgcv::gam(Y~s(X, bs="cr")+s(id,bs="re",by=dummy),data=d)
-      
+      if(!is.null(V)){
+        equation <- as.formula(paste0("Y~X + V + X*V + s(id,bs=\"re\",by=dummy)"))
+        fit <- mgcv::gam(formula = equation,data=d)
+        
+      }else{
+        fit <- mgcv::gam(Y~X +s(id,bs="re",by=dummy),data=d)
+      }
     }
   }
   
@@ -157,6 +181,8 @@ Mode <- function(x) {
   ux <- unique(x)
   ux[which.max(tabulate(match(x, ux)))]
 }
+
+
 
 predict_gam_diff <- function(fit, d, quantile_diff=c(0.25,0.75), Xvar, Yvar){
   
@@ -327,8 +353,8 @@ gam_simul_CI <- function(m,newdata,nreps=10000, xlab="", ylab="", title="") {
   
   pred <- pred %>% arrange(X)
   p <- ggplot(pred) + geom_ribbon(aes(x=X, ymin=lwrS, ymax=uprS), alpha=0.5) + 
-    geom_path(aes(x=X, y=lwrS), color="blue")+
-    geom_path(aes(x=X, y=uprS), color="red")+
+    # geom_path(aes(x=X, y=lwrS), color="blue")+
+    # geom_path(aes(x=X, y=uprS), color="red")+
     geom_path(aes(x=X, y=fit ), color="black") +
     xlab(xlab) + ylab(ylab) +
     ggtitle(title)

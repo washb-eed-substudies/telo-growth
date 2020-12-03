@@ -238,6 +238,9 @@ h1adj.res <- tmle_quart(dat=d,
 h1adj.res
 
 
+#fit simultaneous confidence intervals
+
+
 
 #Hypothesis 2
 #The change in telomere length between Year 1 and Year 2 is associated with growth velocity (kg/month or cm/month) between Year 1 and Year 2.

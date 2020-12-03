@@ -1,3 +1,22 @@
+
+
+
+# dat=d
+# Y="delta_laz_t2_t3"
+# W=Wvars_2_3
+# A="delta_TS"
+# id="block"
+# Alevels=c("Q1","Q2","Q3","Q4")
+# outputdf = h1adj.res
+# family="gaussian"
+# SLlibrary="SL.gam"
+# 
+# n.cat=4
+# reflevel=1
+# sparseN=0
+
+
+
 #----base quartile TMLE Functions---#
 
 select_groups <- function(data, groups, ...) {
@@ -84,6 +103,34 @@ tmle_quart<-function(dat=d,
     do(as.data.frame(washb_mean(Y=.[[1]], id=1:length(.[[1]]), print = F))) %>% 
     as.data.frame %>% `rownames<-`(.[,1]) #%>% .[,-1]
   
+  # #Extact adjusted mean Y|A
+  # if(!is.null(W)){
+  #   adj.means=NULL
+  #   for(i in levels(fulldat[[2]])){
+  #     df <- fulldat %>% filter(.[[2]]==!!(i)) %>% droplevels(.)
+  #     
+  #     w.mean <- df[,-c(1:3)]
+  # 
+  #     EY1<-tmle(Y=df[,1], 
+  #                          A=rep(1, nrow(df)), 
+  #                          W=w.mean[,c(1:3)], 
+  #                          family = family, 
+  #                          Q.SL.library="SL.glmnet",
+  #                          g.SL.library = SLlibrary,
+  #                          verbose = F)  
+  #     EY1$estimates$EY1$psi
+  #     
+  #     
+  #     adj.mean.Q <- data.frame(
+  #       level = df[1,2],
+  #       EY = EY1$estimates$EY1$psi,
+  #       EY.lb = EY1$estimates$EY1$CI[1],
+  #       EY.ub = EY1$estimates$EY1$CI[2]
+  #     )
+  #     adj.means <- bind_rows(adj.means, adj.mean.Q)
+  #   }
+  # }
+
   
   #Extract desired levels
   levelmeans<-levelmeans[1:n.cat,]
@@ -175,6 +222,10 @@ tmle_quart<-function(dat=d,
     paste0(">=", Acuts[3])
   )
   
+  #merge in adjusted means
+  # if(!is.null(W)){
+  #   res <- left_join(res, adj.means, by="level")
+  # }
   
   if(!is.null(outputdf)){
     return(rbind(outputdf,res))
@@ -213,8 +264,7 @@ tmle_wrapper <-function(d,
                        Q.SL.library=lib,
                        g.SL.library = lib,
                        verbose = T)  
-  
-  
+
   if(family=="binomial"){
     return(c(unlist(mixedCV.tmle.A$estimates$ATE),unlist(mixedCV.tmle.A$estimates$RR)))
   }else{
