@@ -13,16 +13,9 @@ adj <- rbind(h1adj.res, h2adj.res, h3adj.res, h4adj.res,
 
 # separate BH for each outcome in either unadjusted or adjusted analysis
 # group by outcome and adjust BH
-BH_unadj <- unadj %>% group_by(Y) %>% summarize(X=A, level=level, ATE=ATE, var=var, CI1=CI1, CI2=CI2, 
-                                                Pval=Pval, compN=compN, refN=refN, meanLevel=meanLevel,
-                                                meanN=meanN, meanY=meanY, mean.sd=mean.sd, mean.se=mean.se, 
-                                                mean.CI1=mean.CI1, mean.CI2=mean.CI2, cutpoints=cutpoints,
-                                                BH.Pval=p.adjust(Pval, method="BH"))
-BH_adj <- adj %>% group_by(Y) %>% summarize(X=A, level=level, ATE=ATE, var=var, CI1=CI1, CI2=CI2, 
-                                            Pval=Pval, compN=compN, refN=refN, meanLevel=meanLevel,
-                                            meanN=meanN, meanY=meanY, mean.sd=mean.sd, mean.se=mean.se, 
-                                            mean.CI1=mean.CI1, mean.CI2=mean.CI2, cutpoints=cutpoints,
-                                            BH.Pval=p.adjust(Pval, method="BH"))
+BH_unadj <- unadj %>% group_by(Y) %>% mutate(BH.Pval=p.adjust(Pval, method="BH"))
+                                        
+BH_adj <- adj %>% group_by(Y) %>% mutate(BH.Pval=p.adjust(Pval, method="BH"))
 
 
 delta_unadj <- filter(BH_unadj, X=="delta_TS")
