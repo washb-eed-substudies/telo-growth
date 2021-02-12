@@ -192,7 +192,7 @@ Wvars_2_3<-c("sex","birthord", "momage","momheight","momedu",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
          "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
          "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-         "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2", "anthro_days_btwn_t2_t3")
+         "life_viol_any_t3", "anthro_days_btwn_t2_t3")
 
 
 h1adj.res <- tmle_quart(dat=d, 
@@ -387,7 +387,7 @@ Wvars_H3<-c("sex","birthord", "momage", "momheight","momedu",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
          "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
          "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-         "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
+         "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2", "anthro_days_btwn_t2_t3")
 
 
 #null dataframe
@@ -1174,7 +1174,7 @@ Wvars_H7<-c("sex","birthord", "momage", "momheight","momedu",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
          "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
          "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-         "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
+         "life_viol_any_t3", "anthro_days_btwn_t2_t3")
 
 
 
@@ -1649,7 +1649,7 @@ Wvars_h8<-c("sex","birthord", "momage", "momheight","momedu",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
          "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
          "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-         "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
+         "life_viol_any_t3", "anthro_days_btwn_t2_t3")
 
 
 
