@@ -187,7 +187,11 @@ gam_simul_CI <- function(m,newdata,nreps=10000, xlab="", ylab="", title=""){
   newdata <- newdata %>% mutate(dummy=0)
 
   #get 10th and 90th percentile of distribution to truncate plot
-  trunc_points <- quantile(newdata$X, probs=c(0.1,0.9))
+
+  
+  
+  
+    trunc_points <- quantile(newdata$X, probs=c(0.05,0.95))
   Acuts=as.numeric(summary( subset(newdata, select=X)[,1])[c(2,3,5)])
   newdata$quartiles<-findInterval(newdata$X, Acuts)
   
@@ -238,10 +242,10 @@ gam_simul_CI <- function(m,newdata,nreps=10000, xlab="", ylab="", title=""){
   offset = mean(pred$fit) - mean(pred$Y)
   #offset = 0
   
-  p <- ggplot(pred) + geom_ribbon(aes(x=X, ymin=lwrS-offset, ymax=uprS-offset), alpha=0.5) + 
+  p <- ggplot(pred) + geom_ribbon(aes(x=X, ymin=lwrS-offset, ymax=uprS-offset), alpha=0.2) + 
     geom_path(aes(x=X, y=fit - offset), color="black") +
-    geom_point(data=EY, aes(x=midpoints, y=emmean)) +
-    geom_linerange(data=EY, aes(x=midpoints, ymin=lower.CL, ymax=upper.CL)) +
+    geom_point(data=EY, aes(x=midpoints, y=emmean), size=2.5) +
+    geom_linerange(data=EY, aes(x=midpoints, ymin=lower.CL, ymax=upper.CL), size=1) +
     geom_vline(aes(xintercept=Acuts[1]), linetype="dashed", color="black") +
     geom_vline(aes(xintercept=Acuts[2]), linetype="dashed", color="black") +
     geom_vline(aes(xintercept=Acuts[3]), linetype="dashed", color="black") +
