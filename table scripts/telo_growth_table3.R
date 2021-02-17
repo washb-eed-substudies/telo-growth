@@ -1,9 +1,7 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
-#load results/telo_growth_results_BH.Rdata for new version of R
-#load results/telo_growth_results_BH_Audrie_R.Rdata for Audrie's old version of R
-load(here("results/telo_growth_results_BH_Audrie_R.Rdata"))
+load(here("results/telo_growth_results.Rdata"))
 load(here("results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
@@ -43,32 +41,32 @@ tbl3 <- data.table(
                                   paste(wazy2h5unadj$ATE[2], " (", wazy2h5unadj$CI1[2], ", ", wazy2h5unadj$CI2[2], ")", sep=""),
                                   paste(wlzy2h5unadj$ATE[2], " (", wlzy2h5unadj$CI1[2], ", ", wlzy2h5unadj$CI2[2], ")", sep=""),
                                   paste(hczy2h5unadj$ATE[2], " (", hczy2h5unadj$CI1[2], ", ", hczy2h5unadj$CI2[2], ")", sep="")), 
-  " "=c(" ", "P-value", as.character(lazy2h5unadj$Pval[2]), as.character(wazy2h5unadj$Pval[2]), as.character(wlzy2h5unadj$Pval[2]), as.character(hczy2h5unadj$Pval[2])), 
+  " "=c(" ", "P-value", as.character(lazy2h5unadj$BH.Pval[2]), as.character(wazy2h5unadj$BH.Pval[2]), as.character(wlzy2h5unadj$BH.Pval[2]), as.character(hczy2h5unadj$BH.Pval[2])), 
   " "=c("Fully adjusted", "Coefficient (95% CI)", paste(lazy2h5adj$ATE[2], " (", lazy2h5adj$CI1[2], ", ", lazy2h5adj$CI2[2], ")", sep=""),
         paste(wazy2h5adj$ATE[2], " (", wazy2h5adj$CI1[2], ", ", wazy2h5adj$CI2[2], ")", sep=""),
         paste(wlzy2h5adj$ATE[2], " (", wlzy2h5adj$CI1[2], ", ", wlzy2h5adj$CI2[2], ")", sep=""),
         paste(hczy2h5adj$ATE[2], " (", hczy2h5adj$CI1[2], ", ", hczy2h5adj$CI2[2], ")", sep="")), 
-  " "=c(" ", "P-value", as.character(lazy2h5adj$Pval[2]), as.character(wazy2h5adj$Pval[2]), as.character(wlzy2h5adj$Pval[2]), as.character(hczy2h5adj$Pval[2])), 
+  " "=c(" ", "P-value", as.character(lazy2h5adj$BH.Pval[2]), as.character(wazy2h5adj$BH.Pval[2]), as.character(wlzy2h5adj$BH.Pval[2]), as.character(hczy2h5adj$BH.Pval[2])), 
   "T/S Ratio Year 2, Q3 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h5unadj$ATE[3], " (", lazy2h5unadj$CI1[3], ", ", lazy2h5unadj$CI2[3], ")", sep=""),
                                   paste(wazy2h5unadj$ATE[3], " (", wazy2h5unadj$CI1[3], ", ", wazy2h5unadj$CI2[3], ")", sep=""),
                                   paste(wlzy2h5unadj$ATE[3], " (", wlzy2h5unadj$CI1[3], ", ", wlzy2h5unadj$CI2[3], ")", sep=""),
                                   paste(hczy2h5unadj$ATE[3], " (", hczy2h5unadj$CI1[3], ", ", hczy2h5unadj$CI2[3], ")", sep="")), 
-  " "=c(" ", "P-value", as.character(lazy2h5unadj$Pval[3]), as.character(wazy2h5unadj$Pval[3]), as.character(wlzy2h5unadj$Pval[3]), as.character(hczy2h5unadj$Pval[3])),
+  " "=c(" ", "P-value", as.character(lazy2h5unadj$BH.Pval[3]), as.character(wazy2h5unadj$BH.Pval[3]), as.character(wlzy2h5unadj$BH.Pval[3]), as.character(hczy2h5unadj$BH.Pval[3])),
   " "=c("Fully adjusted", "Coefficient (95% CI)", paste(lazy2h5adj$ATE[3], " (", lazy2h5adj$CI1[3], ", ", lazy2h5adj$CI2[3], ")", sep=""),
         paste(wazy2h5adj$ATE[3], " (", wazy2h5adj$CI1[3], ", ", wazy2h5adj$CI2[3], ")", sep=""),
         paste(wlzy2h5adj$ATE[3], " (", wlzy2h5adj$CI1[3], ", ", wlzy2h5adj$CI2[3], ")", sep=""),
         paste(hczy2h5adj$ATE[3], " (", hczy2h5adj$CI1[3], ", ", hczy2h5adj$CI2[3], ")", sep="")),
-  " "=c(" ", "P-value", as.character(lazy2h5adj$Pval[3]), as.character(wazy2h5adj$Pval[3]), as.character(wlzy2h5adj$Pval[3]), as.character(hczy2h5adj$Pval[3])),
+  " "=c(" ", "P-value", as.character(lazy2h5adj$BH.Pval[3]), as.character(wazy2h5adj$BH.Pval[3]), as.character(wlzy2h5adj$BH.Pval[3]), as.character(hczy2h5adj$BH.Pval[3])),
   "T/S Ratio Year 2, Q4 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h5unadj$ATE[4], " (", lazy2h5unadj$CI1[4], ", ", lazy2h5unadj$CI2[4], ")", sep=""),
                                   paste(wazy2h5unadj$ATE[4], " (", wazy2h5unadj$CI1[4], ", ", wazy2h5unadj$CI2[4], ")", sep=""),
                                   paste(wlzy2h5unadj$ATE[4], " (", wlzy2h5unadj$CI1[4], ", ", wlzy2h5unadj$CI2[4], ")", sep=""),
                                   paste(hczy2h5unadj$ATE[4], " (", hczy2h5unadj$CI1[4], ", ", hczy2h5unadj$CI2[4], ")", sep="")),
-  " "=c(" ", "P-value", as.character(lazy2h5unadj$Pval[4]), as.character(wazy2h5unadj$Pval[4]), as.character(wlzy2h5unadj$Pval[4]), as.character(hczy2h5unadj$Pval[4])),
+  " "=c(" ", "P-value", as.character(lazy2h5unadj$BH.Pval[4]), as.character(wazy2h5unadj$BH.Pval[4]), as.character(wlzy2h5unadj$BH.Pval[4]), as.character(hczy2h5unadj$BH.Pval[4])),
   " "=c("Fully adjusted", "Coefficient (95% CI)", paste(lazy2h5adj$ATE[4], " (", lazy2h5adj$CI1[4], ", ", lazy2h5adj$CI2[4], ")", sep=""),
         paste(wazy2h5adj$ATE[4], " (", wazy2h5adj$CI1[4], ", ", wazy2h5adj$CI2[4], ")", sep=""),
         paste(wlzy2h5adj$ATE[4], " (", wlzy2h5adj$CI1[4], ", ", wlzy2h5adj$CI2[4], ")", sep=""),
         paste(hczy2h5adj$ATE[4], " (", hczy2h5adj$CI1[4], ", ", hczy2h5adj$CI2[4], ")", sep="")),
-  " "=c(" ", "P-value", as.character(lazy2h5adj$Pval[4]), as.character(wazy2h5adj$Pval[4]), as.character(wlzy2h5adj$Pval[4]), as.character(hczy2h5adj$Pval[4]))
+  " "=c(" ", "P-value", as.character(lazy2h5adj$BH.Pval[4]), as.character(wazy2h5adj$BH.Pval[4]), as.character(wlzy2h5adj$BH.Pval[4]), as.character(hczy2h5adj$BH.Pval[4]))
 )
 
 #Add quartile cutpoints
@@ -84,7 +82,7 @@ colnames(tbl3)[15] <- paste0("T/S Ratio Year 2,\nQuartile 4: ",Q4," vs. Quartile
 
 
 
-write.csv(tbl3, file=here("tables/main/telo_growth_table3_noBH.csv"))
-print(xtable(tbl3), type="html", file=here("tables/main/telo_growth_table3_noBH.html"))
+write.csv(tbl3, file=here("tables/main/telo_growth_table3.csv"))
+print(xtable(tbl3), type="html", file=here("tables/main/telo_growth_table3.html"))
 
 
