@@ -26,11 +26,11 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
   
   ### this function produces a table that can be saved as a csv
   
-  tbl <- data.table(" " = character(), " " = character(), " " = character(), " " = character(),
+  tbl <- data.table(" " = character(), "Outcome" = character(), "10th pctl Mean" = character(), "90th pctl Mean" = character(),
                     " Outcome, 90th pctl v. 10th pctl" = character(), " " = character(), " " = character(), " " = character(), 
                     " " = character(), " " = character(), " " = character(), " " = character())
   tbl <- rbind(tbl, list(" ", " ", " ", " ", "Unadjusted", " ", " ", " ", "Fully adjusted", " ", " ", " "))
-  tbl <- rbind(tbl, list(" ", "Outcome", "10th pctl Mean", "90th pctl Mean", 
+  tbl <- rbind(tbl, list(" ", "", "", "", 
                          "Predicted Outcome at 10th pctl", "Predicted Outcome at 90th pctl", "Coefficient (95% CI)", "P-value", 
                          "Predicted Outcome at 10th pctl", "Predicted Outcome at 90th pctl", "Coefficient (95% CI)", "P-value"))
   for (i in 1:length(exposure)) {
@@ -98,12 +98,12 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
   # format for export
   flextbl<-flextable(tbl, col_keys=names(tbl))
   flextbl <- set_header_labels(flextbl,
-                               values = list("V1" = name, "V2" = "Outcome", "V3" = "10th pct1 Mean", "V4" = "90th pctl Mean",
+                               values = list("V1" = name, "V2" = "", "V3" = "", "V4" = "",
                                              "V5" = "Predicted Outcome at 10th pctl", "V6" = "Predicted Outcome at 90th pctl", "V7" = "Coefficient (95% CI)", "V8" = "P-value",
                                              "V9" = "Predicted Outcome at 10th pctl", "V10" = "Predicted Outcome at 90th pctl", "V11" = "Coefficient (95% CI)", "V12" = "P-value"))
   flextbl <- add_header_row(flextbl, values = c("","","","", "Unadjusted", "Fully adjusted"), colwidths=c(1,1,1,1,4,4))
   # flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
-  flextbl <- add_header_row(flextbl, values = c("","","","", "Outcome, 90th pctl v. 10th pctl"), colwidths=c(1,1,1,1,8))
+  flextbl <- add_header_row(flextbl, values = c("","Outcome","10th pct1 Mean","90th pctl Mean", "Outcome, 90th pctl v. 10th pctl"), colwidths=c(1,1,1,1,8))
   # flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
   flextbl <- hline(flextbl, part="header", border=fp_border(color="black"))
   flextbl <- hline_bottom(flextbl, part="body", border=fp_border(color="black"))

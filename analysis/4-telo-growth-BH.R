@@ -10,7 +10,7 @@ H3_res <- readRDS(here('results/gam_results/unadjusted/H3_res.RDS'))
 
 H1_adj_res <- readRDS(here('results/gam_results/adjusted/H1_adj_res.RDS'))
 H2_adj_res <- readRDS(here('results/gam_results/adjusted/H2_adj_res.RDS'))
-H3_adj_res <- readRDS(here('results/gam_results/adjusted/H3_adj_res.RDS'))
+H3_adj_res <- readRDS(here('results/gam_results/adjusted/H3_adj_res_tmleR.RDS'))
 
 H1_res$H = 1
 H2_res$H = 2

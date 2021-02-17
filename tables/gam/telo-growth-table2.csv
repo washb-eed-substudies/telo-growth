@@ -1,6 +1,6 @@
-""," "," "," "," "," Outcome, 90th pctl v. 10th pctl"," "," "," "," "," "," "," "
+""," ","Outcome","10th pctl Mean","90th pctl Mean"," Outcome, 90th pctl v. 10th pctl"," "," "," "," "," "," "," "
 "1"," "," "," "," ","Unadjusted"," "," "," ","Fully adjusted"," "," "," "
-"2"," ","Outcome","10th pctl Mean","90th pctl Mean","Predicted Outcome at 10th pctl","Predicted Outcome at 90th pctl","Coefficient (95% CI)","P-value","Predicted Outcome at 10th pctl","Predicted Outcome at 90th pctl","Coefficient (95% CI)","P-value"
+"2"," ","","","","Predicted Outcome at 10th pctl","Predicted Outcome at 90th pctl","Coefficient (95% CI)","P-value","Predicted Outcome at 10th pctl","Predicted Outcome at 90th pctl","Coefficient (95% CI)","P-value"
 "3","Telomere length at Year 2","LAZ Year 2","1.14","1.74","-1.45","-1.2","0.25 (0.06, 0.45)","0.03","-1.84","-1.72","0.12 (-0.01, 0.24)","0.22"
 "4","","WAZ Year 2","1.14","1.74","-1.47","-1.42","0.05 (-0.14, 0.25)","0.69","-1.76","-1.7","0.06 (-0.05, 0.17)","0.67"
 "5","","WLZ Year 2","1.14","1.74","-0.92","-1.04","-0.12 (-0.29, 0.05)","0.18","-1.13","-1.11","0.02 (-0.15, 0.19)","0.84"
