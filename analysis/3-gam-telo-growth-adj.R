@@ -1,7 +1,6 @@
 rm(list=ls())
 
 source(here::here("0-config.R"))
-source(here::here("analysis/1-gam-functions.R"))
 
 load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
 # Z-score telomere length
@@ -91,15 +90,33 @@ Yvars <- c("laz_t2", "waz_t2", "whz_t2" ,"hcz_t2", "laz_t3", "waz_t3", "whz_t3",
            "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3",
            "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3") 
 
-Wvars_2<-c("sex","birthord", "momage", "momheight","momedu", 
-           "hfiacat", "Nlt18", "Ncomp", "watmin", "floor", 
-           "walls", "elec", "asset_wardrobe", "asset_table", 
-           "asset_chair", "asset_clock", "asset_khat", 
-           "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
-           "asset_bike", "asset_moto", "asset_sewmach",
-           "asset_mobile", "n_cattle", "n_goat", "n_chicken",
-           "monsoon_ht2", "ageday_ht2", "tr", "cesd_sum_t2", "diar7d_t2", 
-           "life_viol_any_t3")
+Wvars_2_2<-c("sex","birthord", "momage", "momheight","momedu", 
+              "hfiacat", "Nlt18", "Ncomp", "watmin", "floor", 
+              "walls", "elec", "asset_wardrobe", "asset_table", 
+              "asset_chair", "asset_clock", "asset_khat", 
+              "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+              "asset_bike", "asset_moto", "asset_sewmach",
+              "asset_mobile", "n_cattle", "n_goat", "n_chicken",
+              "monsoon_ht2", "ageday_ht2", "tr", "cesd_sum_t2", "diar7d_t2", 
+              "life_viol_any_t3")
+
+Wvars_2_3 <-c("sex","birthord", "momage", "momheight","momedu", 
+              "hfiacat", "Nlt18", "Ncomp", "watmin", 
+              "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+              "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+              "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+              "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
+              "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+              "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
+
+Wvars_2_23 <- c("sex","birthord", "momage", "momheight","momedu", 
+                "hfiacat", "Nlt18", "Ncomp", "watmin", 
+                "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+                "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+                "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+                "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
+                "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+                "life_viol_any_t3", "anthro_days_btwn_t2_t3")
 
 #Fit models
 H1_adj_models <- NULL
@@ -107,7 +124,14 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars_2)
+    if(grepl("delta|velocity", j)){
+      Wvars <- Wvars_2_23
+    }else if(grepl("t2", j)){
+      Wvars <- Wvars_2_2
+    }else{
+      Wvars <- Wvars_2_3
+    }
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars)
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H1_adj_models <- bind_rows(H1_adj_models, res)
   }
@@ -133,33 +157,28 @@ for(i in 1:nrow(H1_adj_models)){
 
 
 #Save models
-#saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
+saveRDS(H1_adj_models, here("results/gam_models/adjusted/telot2_adj_models.RDS"))
 
 #Save results
-saveRDS(H1_adj_res, here("results/gam_results/adjusted/H1_adj_res.RDS"))
-
-
-#Save plots
-#saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
+saveRDS(H1_adj_res, here("results/gam_results/adjusted/telot2_adj_res.RDS"))
 
 #Save plot data
-#saveRDS(H1_adj_plot_data, paste0(dropboxDir,"results/stress-growth-models/figure-data/H1_adj_spline_data.RDS"))
+saveRDS(H1_adj_plot_data, here("results/gam_figure_data/adjusted/telot2_adj_spline_data.RDS"))
 
 
 
 #### Association between telomere length at year 2 and growth ####
-# all immune outcomes at y1 v. growth at y2
 Xvars <- c("TS_t3", "TS_t3_Z")            
 Yvars <- c("laz_t3", "waz_t3", "whz_t3" ,"hcz_t3") 
 
-Wvars_H3<-c("sex","birthord", "momage", "momheight","momedu", 
-            "hfiacat", "Nlt18", "Ncomp", "watmin", 
-            "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
-            "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
-            "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
-            "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
-            "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-            "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
+Wvars_3_3<-c("sex","birthord", "momage", "momheight","momedu", 
+           "hfiacat", "Nlt18", "Ncomp", "watmin", 
+           "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+           "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+           "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+           "n_cattle", "n_goat", "n_chicken", "monsoon_ht3", 
+           "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+           "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
 
 #Fit models
 H2_adj_models <- NULL
@@ -167,7 +186,7 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars_H3)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars_3_3)
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H2_adj_models <- bind_rows(H2_adj_models, res)
   }
@@ -193,40 +212,49 @@ for(i in 1:nrow(H2_adj_models)){
 
 
 #Save models
-#saveRDS(H2_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/adj_H2_adj_models.RDS"))
+saveRDS(H2_adj_models, here("results/gam_models/adjusted/telot3_adj_models.RDS"))
 
 #Save results
-saveRDS(H2_adj_res, here("results/gam_results/adjusted/H2_adj_res.RDS"))
-
-
-#Save plots
-#saveRDS(H2_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H2_adj_splines.RDS"))
+saveRDS(H2_adj_res, here("results/gam_results/adjusted/telot3_adj_res.RDS"))
 
 #Save plot data
-#saveRDS(H2_plot_data, paste0(dropboxDir,"results/stress-growth-models/figure-data/H2_adj_spline_data.RDS"))
+saveRDS(H2_plot_data, here("results/gam_figure_data/adjusted/telot3_adj_spline_data.RDS"))
 
 
 
 #### Association between change in telomere length between years 1 and 2 and growth ####
-# immune ratios at y1 and growth velocity outcomes between y1 and y2
 Xvars <- c("delta_TS", "delta_TS_Z")            
 Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
            "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
            "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
 
-Wvars_2_3<-c("sex","birthord", "momage","momheight","momedu", 
+Wvars_23_23<-c("sex","birthord", "momage","momheight","momedu", 
              "hfiacat", "Nlt18", "Ncomp", "watmin", 
              "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
              "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
              "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
              "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
              "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-             "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2", "anthro_days_btwn_t2_t3")
+             "life_viol_any_t3", "anthro_days_btwn_t2_t3")
+
+Wvars_23_3<-c("sex","birthord", "momage", "momheight","momedu", 
+            "hfiacat", "Nlt18", "Ncomp", "watmin", 
+            "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+            "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+            "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+            "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
+            "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+            "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2", "anthro_days_btwn_t2_t3")
 
 #Fit models
 H3_adj_models <- NULL
 for(i in Xvars){
   for(j in Yvars){
+    if(grepl("delta|velocity", j)){
+      Wvars <- Wvars_23_23
+    }else{
+      Wvars <- Wvars_23_3
+    }
     res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars_2_3)
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H3_adj_models <- bind_rows(H3_adj_models, res)
@@ -253,15 +281,11 @@ for(i in 1:nrow(H3_adj_models)){
 
 
 #Save models
-#saveRDS(H3_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/adj_H3_adj_models.RDS"))
+saveRDS(H3_adj_models, here("results/gam_models/adjusted/dtelo_adj_models.RDS"))
 
 #Save results
-saveRDS(H3_adj_res, here("results/gam_results/adjusted/H3_adj_res_tmleR.RDS"))
-
-
-#Save plots
-#saveRDS(H3_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H3_adj_splines.RDS"))
+saveRDS(H3_adj_res, here("results/gam_results/adjusted/dtelo_adj_res.RDS"))
 
 #Save plot data
-#saveRDS(H3_plot_data, paste0(dropboxDir,"results/stress-growth-models/figure-data/H3_adj_spline_data.RDS"))
+saveRDS(H3_plot_data, here("results/gam_figure_data/adjusted/dtelo_adj_spline_data.RDS"))
 

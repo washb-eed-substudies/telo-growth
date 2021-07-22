@@ -1,7 +1,6 @@
 rm(list=ls())
 
 source(here::here("0-config.R"))
-source(here::here("analysis/1-gam-functions.R"))
 
 load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
 # Z-score telomere length
@@ -70,17 +69,13 @@ for(i in 1:nrow(H1_models)){
 
 
 #Save models
-#saveRDS(H1_models, here("models/H1_models.RDS"))
+saveRDS(H1_models, here("results/gam_models/unadjusted/telot2_models.RDS"))
 
 #Save results
-saveRDS(H1_res, here("results/gam_results/unadjusted/H1_res.RDS"))
-
-
-#Save plots
-#saveRDS(H1_plot_list, here("figure-objects/H1_unadj_splines.RDS"))
+saveRDS(H1_res, here("results/gam_results/unadjusted/telot2_res.RDS"))
 
 #Save plot data
-#saveRDS(H1_plot_data, here("figure-data/H1_unadj_spline_data.RDS"))
+saveRDS(H1_plot_data, here("results/gam_figure_data/unadjusted/telot2_unadj_spline_data.RDS"))
 
 
 
@@ -119,17 +114,13 @@ for(i in 1:nrow(H2_models)){
 
 
 #Save models
-#saveRDS(H2_models, here("models/H2_models.RDS"))
+saveRDS(H2_models, here("results/gam_models/unadjusted/telot3_models.RDS"))
 
 #Save results
-saveRDS(H2_res, here("results/gam_results/unadjusted/H2_res.RDS"))
-
-
-#Save plots
-#saveRDS(H2_plot_list, here("figure-objects/H2_unadj_splines.RDS"))
+saveRDS(H2_res, here("results/gam_results/unadjusted/telot3_res.RDS"))
 
 #Save plot data
-#saveRDS(H2_plot_data, here("figure-data/H2_unadj_spline_data.RDS"))
+saveRDS(H2_plot_data, here("results/gam_figure_data/unadjusted/telot3_unadj_spline_data.RDS"))
 
 
 
@@ -173,15 +164,10 @@ for(i in 1:nrow(H3_models)){
 
 
 #Save models
-#saveRDS(H3_models, here("models/H3_models.RDS"))
+saveRDS(H3_models, here("results/gam_models/unadjusted/dtelo_models.RDS"))
 
 #Save results
-saveRDS(H3_res, here("results/gam_results/unadjusted/H3_res.RDS"))
-
-
-#Save plots
-#saveRDS(H3_plot_list, here("figure-objects/H3_unadj_splines.RDS"))
+saveRDS(H3_res, here("results/gam_results/unadjusted/dtelo_res.RDS"))
 
 #Save plot data
-#saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
-
+saveRDS(H3_plot_data, here("results/gam_figure_data/unadjusted/dtelo_unadj_spline_data.RDS"))

@@ -4,13 +4,13 @@ rm(list=ls())
 source(here::here("0-config.R"))
 
 # load all results
-H1_res <- readRDS(here('results/gam_results/unadjusted/H1_res.RDS'))
-H2_res <- readRDS(here('results/gam_results/unadjusted/H2_res.RDS'))
-H3_res <- readRDS(here('results/gam_results/unadjusted/H3_res.RDS'))
+H1_res <- readRDS(here('results/gam_results/unadjusted/telot2_res.RDS'))
+H2_res <- readRDS(here('results/gam_results/unadjusted/telot3_res.RDS'))
+H3_res <- readRDS(here('results/gam_results/unadjusted/dtelo_res.RDS'))
 
-H1_adj_res <- readRDS(here('results/gam_results/adjusted/H1_adj_res.RDS'))
-H2_adj_res <- readRDS(here('results/gam_results/adjusted/H2_adj_res.RDS'))
-H3_adj_res <- readRDS(here('results/gam_results/adjusted/H3_adj_res_tmleR.RDS'))
+H1_adj_res <- readRDS(here('results/gam_results/adjusted/telot2_adj_res.RDS'))
+H2_adj_res <- readRDS(here('results/gam_results/adjusted/telot3_adj_res.RDS'))
+H3_adj_res <- readRDS(here('results/gam_results/adjusted/dtelo_adj_res.RDS'))
 
 H1_res$H = 1
 H2_res$H = 2
@@ -56,10 +56,10 @@ full_res <- rbind(full_res_Z, full_res_noZ)
 full_adj_res <- rbind(full_adj_res_Z, full_adj_res_noZ)
 
 
-saveRDS(full_res %>% filter(H==1) %>% select(-H), here("results/gam_results/unadjusted/H1_res_BH.RDS"))
-saveRDS(full_res %>% filter(H==2) %>% select(-H), here("results/gam_results/unadjusted/H2_res_BH.RDS"))
-saveRDS(full_res %>% filter(H==3) %>% select(-H), here("results/gam_results/unadjusted/H3_res_BH.RDS"))
+saveRDS(full_res %>% filter(H==1) %>% select(-H), here("results/gam_results/unadjusted/telot2_res.RDS"))
+saveRDS(full_res %>% filter(H==2) %>% select(-H), here("results/gam_results/unadjusted/telot3_res.RDS"))
+saveRDS(full_res %>% filter(H==3) %>% select(-H), here("results/gam_results/unadjusted/dtelo_res.RDS"))
 
-saveRDS(full_adj_res %>% filter(H==1) %>% select(-H), here("results/gam_results/adjusted/H1_adj_res_BH.RDS"))
-saveRDS(full_adj_res %>% filter(H==2) %>% select(-H), here("results/gam_results/adjusted/H2_adj_res_BH.RDS"))
-saveRDS(full_adj_res %>% filter(H==3) %>% select(-H), here("results/gam_results/adjusted/H3_adj_res_BH.RDS"))
+saveRDS(full_adj_res %>% filter(H==1) %>% select(-H), here("results/gam_results/adjusted/telot2_adj_res.RDS"))
+saveRDS(full_adj_res %>% filter(H==2) %>% select(-H), here("results/gam_results/adjusted/telot3_adj_res.RDS"))
+saveRDS(full_adj_res %>% filter(H==3) %>% select(-H), here("results/gam_results/adjusted/dtelo_adj_res.RDS"))
