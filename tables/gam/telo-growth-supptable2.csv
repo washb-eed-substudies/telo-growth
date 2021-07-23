@@ -1,0 +1,7 @@
+"","name","Outcome","N","10th Percentile","90th Percentile"," Outcome, 90th Percentile v. 10th Percentile"," "," "," "," "," "," "," "," "," "
+"1"," "," "," "," "," ","Unadjusted"," "," "," "," ","Adjusted"," "," "," "," "
+"2"," "," "," "," "," ","Predicted Outcome at 10th Percentile","Predicted Outcome at 90th Percentile","Coefficient (95% CI)","P-value","FDR adjusted P-value","Predicted Outcome at 10th Percentile","Predicted Outcome at 90th Percentile","Coefficient (95% CI)","P-value","FDR adjusted P-value"
+"3","Telomere length at Year 2","LAZ Year 2","713","1.14","1.74","-1.45","-1.2","0.25 (0.06, 0.45)","0.01","0.03","-1.68","-1.6","0.08 (-0.03, 0.19)","0.17","0.34"
+"4","","WAZ Year 2","713","1.14","1.74","-1.47","-1.42","0.05 (-0.14, 0.25)","0.59","0.69","-1.84","-1.78","0.06 (-0.05, 0.16)","0.3","0.45"
+"5","","WLZ Year 2","713","1.14","1.74","-0.92","-1.04","-0.12 (-0.29, 0.05)","0.17","0.18","-0.98","-1.06","-0.08 (-0.2, 0.04)","0.18","0.35"
+"6","","HCZ Year 2","712","1.14","1.74","-1.82","-1.78","0.03 (-0.14, 0.21)","0.73","0.73","-1.94","-1.94","0 (-0.18, 0.17)","0.98","0.98"

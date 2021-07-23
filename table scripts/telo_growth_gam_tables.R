@@ -3,148 +3,27 @@ rm(list=ls())
 library('flextable')
 library('officer')
 source(here::here("0-config.R"))
+source(here::here("table scripts/table-functions.R"))
+
 
 # load enrollment characteristics and results
 load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
-H1 <- readRDS(here('results/gam_results/unadjusted/H1_res_BH.RDS'))
-H2 <- readRDS(here('results/gam_results/unadjusted/H2_res_BH.RDS'))
-H3 <- readRDS(here('results/gam_results/unadjusted/H3_res_BH.RDS'))
-H1adj <- readRDS(here('results/gam_results/adjusted/H1_adj_res_BH.RDS'))
-H2adj <- readRDS(here('results/gam_results/adjusted/H2_adj_res_BH.RDS'))
-H3adj <- readRDS(here('results/gam_results/adjusted/H3_adj_res_BH.RDS'))
-
-### page settings ###
-sect_properties <- prop_section(
-  page_size = page_size(orient = "portrait", width=8.5, height=11),
-  page_margins = page_mar(bottom=.3, top=.3, right=.3, left=.3, gutter = 0)
-)
-
-#### Functions for growth tables ####
-growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, results_adj){
-  ### name: string name of group of exposures
-  ### expo_var: vector of string exposures to include in table
-  ### out_var: vector of string outcomes to include in table
-  ### exposure: vector of string exposure variable names
-  ### outcome: vector of string outcome variable names
-  ### results: data frame with unadjusted results
-  ### results_adj: data fram with adjusted results
-  
-  ### this function produces a table that can be saved as a csv
-  
-  tbl <- data.table(" " = character(), "Outcome" = character(), "10th percentile" = character(), "90th percentile" = character(),
-                    " Outcome, 90th percentile v. 10th percentile" = character(), " " = character(), " " = character(), " " = character(), 
-                    " " = character(), " " = character(), " " = character(), " " = character())
-  tbl <- rbind(tbl, list(" ", " ", " ", " ", "Unadjusted", " ", " ", " ", "Fully adjusted", " ", " ", " "))
-  tbl <- rbind(tbl, list(" ", "", "", "", 
-                         "Predicted Outcome at 10th percentile", "Predicted Outcome at 90th percentile", "Coefficient (95% CI)", "P-value", 
-                         "Predicted Outcome at 10th percentile", "Predicted Outcome at 90th percentile", "Coefficient (95% CI)", "P-value"))
-  for (i in 1:length(exposure)) {
-    for (j in 1:length(outcome)) {
-      exp <- exposure[i]
-      out <- outcome[j]
-      filtered_res <- results[results$Y==out & results$X==exp,]
-      filtered_adj <- results_adj[results_adj$Y==out & results_adj$X==exp,]
-      unadj <- paste(round(filtered_res$`point.diff`, 2), " (", round(filtered_res$`lb.diff`, 2), ", ", round(filtered_res$`ub.diff`, 2), ")", sep="")
-      adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
-      
-      sigunadj <- ifelse(filtered_res$BH.Pval < 0.2, "*", "")
-      pvalunadj <- paste(round(filtered_res$Pval, 2), sigunadj, sep="")
-      sigadj <- ifelse(filtered_adj$BH.Pval < 0.2, "*", "")
-      pvaladj <- paste(round(filtered_adj$Pval, 2), sigadj, sep="")
-      
-      if (j==1){
-        tbl <- rbind(tbl, list(expo_var[i], out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, pvalunadj, 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, pvaladj))
-      }else {
-        tbl <- rbind(tbl, list("", out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, pvalunadj, 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, pvaladj))
-      }
-    }
-    if (i != length(exposure)) {
-      tbl <- rbind(tbl, list("","","","","","","","","","","",""))
-    }
-  }
-  tbl
-}
-
-growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results, results_adj, exp_col_size = 1, out_col_size = 1){
-  ### name: string name of group of exposures
-  ### expo_var: vector of string exposures to include in table
-  ### out_var: vector of string outcomes to include in table
-  ### exposure: vector of string exposure variable names
-  ### outcome: vector of string outcome variable names
-  ### results: data frame with unadjusted results
-  ### results_adj: data fram with adjusted results
-  
-  ### this function produces a table that can be saved as an image or 
-  ### directly to a word document!
-  
-  # build table
-  tbl <- data.table(matrix(nrow=0, ncol=12))
-  for (i in 1:length(exposure)) {
-    for (j in 1:length(outcome)) {
-      exp <- exposure[i]
-      out <- outcome[j]
-      filtered_res <- results[results$Y==out & results$X==exp,]
-      filtered_adj <- results_adj[results_adj$Y==out & results_adj$X==exp,]
-      unadj <- paste(round(filtered_res$`point.diff`, 2), " (", round(filtered_res$`lb.diff`, 2), ", ", round(filtered_res$`ub.diff`, 2), ")", sep="")
-      adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
-      
-      sigunadj <- ifelse(filtered_res$BH.Pval < 0.2, "*", "")
-      pvalunadj <- paste(round(filtered_res$Pval, 2), sigunadj, sep="")
-      sigadj <- ifelse(filtered_adj$BH.Pval < 0.2, "*", "")
-      pvaladj <- paste(round(filtered_adj$Pval, 2), sigadj, sep="")
-      
-      if (j==1){
-        tbl <- rbind(tbl, list(expo_var[i], out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, pvalunadj, 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, pvaladj))
-      }else {
-        tbl <- rbind(tbl, list(" ", out_var[j], round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, pvalunadj, 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, pvaladj))
-      }
-    }
-    if (i != length(exposure)) {
-      tbl <- rbind(tbl, list("","","","","","","","", "","","",""))
-    }
-  }
-  
-  # format for export
-  flextbl<-flextable(tbl, col_keys=names(tbl))
-  flextbl <- set_header_labels(flextbl,
-                               values = list("V1" = "", "V2" = "", "V3" = "", "V4" = "",
-                                             "V5" = "Predicted Outcome at 10th percentile", "V6" = "Predicted Outcome at 90th percentile", "V7" = "Coefficient (95% CI)", "V8" = "P-value",
-                                             "V9" = "Predicted Outcome at 10th percentile", "V10" = "Predicted Outcome at 90th percentile", "V11" = "Coefficient (95% CI)", "V12" = "P-value"))
-  flextbl <- add_header_row(flextbl, values = c("","","","", "Unadjusted", "Fully adjusted"), colwidths=c(1,1,1,1,4,4))
-  flextbl <- add_header_row(flextbl, values = c(name,"Outcome","10th percentile","90th percentile", "Outcome, 90th percentile v. 10th percentile"), colwidths=c(1,1,1,1,8))
-  flextbl <- hline(flextbl, part="header", border=fp_border(color="black"))
-  flextbl <- hline_bottom(flextbl, part="body", border=fp_border(color="black"))
-  flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
-  flextbl <- flextable::align(flextbl, align = "center", part = "all")
-  flextbl <- flextable::align(flextbl, j = c(1, 2), align = "left", part="all")
-  
-  flextbl <- add_footer_row(flextbl, top=F, 
-                            values = "* P-value < 0.2 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 12)
-  flextbl <- fontsize(flextbl, part = "all", size = 6)
-  flextbl <- width(flextbl, 1:12, width=c(exp_col_size, out_col_size, .5, .5, .5, .5, 1, .3, .5, .5, 1, .3))
-  
-  
-  flextbl
-}
-
+H1 <- readRDS(here('results/gam_results/unadjusted/telot2_res.RDS'))
+H2 <- readRDS(here('results/gam_results/unadjusted/telot3_res.RDS'))
+H3 <- readRDS(here('results/gam_results/unadjusted/dtelo_res.RDS'))
+H1adj <- readRDS(here('results/gam_results/adjusted/telot2_adj_res.RDS'))
+H2adj <- readRDS(here('results/gam_results/adjusted/telot3_adj_res.RDS'))
+H3adj <- readRDS(here('results/gam_results/adjusted/dtelo_adj_res.RDS'))
 
 
 #### TABLES ####
 #### GAM Table 1 ####
 
-exposure <- c("TS_t2", "TS_t2_Z")
+exposure <- c("TS_t2")
 outcome <- c("laz_t2", "waz_t2", "whz_t2" ,"hcz_t2", "laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
              "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3",
              "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
-expo_var <- c("Telomere length at Year 1", "Z-score of telomere length at Year 1")
+expo_var <- c("Telomere length at Year 1")
 out_var <- c("LAZ Year 1", "WAZ Year 1", "WLZ Year 1", "HCZ Year 1",
              "LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2", 
              "Change in LAZ between Year 1 and Year 2", "Change in WAZ between Year 1 and Year 2", 
@@ -152,45 +31,63 @@ out_var <- c("LAZ Year 1", "WAZ Year 1", "WLZ Year 1", "HCZ Year 1",
              "Length velocity between Year 1 and Year 2", "Weight velocity between Year 1 and Year 2",
              "Head circumference velocity between Year 1 and Year 2")
 
-tbl1 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj)
-tbl1flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, 1, 1.3)
+tbl1 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, T)
+tbl1flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, T, exp_col_size = 1.3, out_col_size = 1.5)
+tbl1supp <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj)
+tbl1flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, F, exp_col_size = 1, out_col_size = 1.3)
 
 #### GAM Table 2 ####
 
-exposure <- c("TS_t3", "TS_t3_Z")
+exposure <- c("TS_t3")
 outcome <- c("laz_t3", "waz_t3", "whz_t3" ,"hcz_t3")
-expo_var <- c("Telomere length at Year 2", "Z-score of telomere length at Year 2")
+expo_var <- c("Telomere length at Year 2")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2")
 
-tbl2 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj)
-tbl2flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, 1.1, .7)
+tbl2 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, T)
+tbl2flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, T, 1.1, .7)
+tbl2supp <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj)
+tbl2flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, F, 1.1, .7)
 
 
 #### GAM Table 3 ####
 
-exposure <- c("delta_TS", "delta_TS_Z")
+exposure <- c("delta_TS")
 outcome <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
              "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
              "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
-expo_var <- c("Change in telomere length between Year 1 and Year 2", "Z-score change in telomere length between Year 1 and Year 2")
+expo_var <- c("Change in telomere length between Year 1 and Year 2")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2", 
              "Change in LAZ between Year 1 and Year 2", "Change in WAZ between Year 1 and Year 2", 
              "Change in WLZ between Year 1 and Year 2", "Change in HCZ between Year 1 and Year 2",
              "Length velocity between Year 1 and Year 2", "Weight velocity between Year 1 and Year 2",
              "Head circumference velocity between Year 1 and Year 2")
 
-tbl3 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj)
-tbl3flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, 1.1, 1.3)
+tbl3 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, T)
+tbl3flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, T, 1.1, 1.3)
+tbl3supp <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj)
+tbl3flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, F, 1.1, 1.3)
 
 
 
 
 #### SAVE TABLES ####
 
-write.csv(tbl1, file=here("tables/gam/telo-growth-table1.csv"))
-write.csv(tbl2, here('tables/gam/telo-growth-table2.csv'))
-write.csv(tbl3, here('tables/gam/telo-growth-table3.csv'))
+write.csv(tbl1, file=here("tables/gam/telo-growth-table2.csv"))
+write.csv(tbl2, here('tables/gam/telo-growth-table3.csv'))
+write.csv(tbl3, here('tables/gam/telo-growth-table4.csv'))
+write.csv(tbl1supp, file=here("tables/gam/telo-growth-supptable1.csv"))
+write.csv(tbl2supp, here('tables/gam/telo-growth-supptable2.csv'))
+write.csv(tbl3supp, here('tables/gam/telo-growth-supptable3.csv'))
 
-save_as_docx("Table 1" = tbl1flex, "Table 2" = tbl2flex, "Table 3" = tbl3flex, 
-             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/GAM Tables v4.docx",
+save_as_docx("Table 2: Association Between Telomere Length at Year 1 and Growth" = tbl1flex, 
+             "Table 3: Association Between Telomere Length at Year 2 and Growth" = tbl2flex, 
+             "Table 4: Association Between Change in Telomere Length and Growth" = tbl3flex, 
+             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth main gam tables.docx",
              pr_section = sect_properties)
+
+save_as_docx("Table S1: Association Between Telomere Length at Year 1 and Growth" = tbl1flexsupp, 
+             "Table S2: Association Between Telomere Length at Year 2 and Growth" = tbl2flexsupp, 
+             "Table S3: Association Between Change in Telomere Length and Growth" = tbl3flexsupp, 
+             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth supplementary gam tables.docx",
+             pr_section = sect_properties)
+
