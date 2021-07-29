@@ -163,6 +163,10 @@
       "Repository": "CRAN",
       "Hash": "bd51734a754b6c2baf28b2d1ebc11e91"
     },
+    "boxr": {
+      "Package": "boxr",
+      "Source": "Repository"
+    },
     "brew": {
       "Package": "brew",
       "Version": "1.0-6",

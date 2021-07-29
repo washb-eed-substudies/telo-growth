@@ -2,7 +2,10 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
+library(boxr)
+box_auth()
+d <- box_read_csv(839767614700)
+
 # Z-score telomere length
 d <- d %>%
   mutate(TS_t2_Z = scale(TS_t2, center=T, scale=T)[,1]) %>%
