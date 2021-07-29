@@ -2,11 +2,16 @@ rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
 
+library(boxr)
+box_auth()
 # load data to be included in Table 1
-d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
+d <- box_read(830186133564)
 
 # calculating quantiles/n for each variable 
 female <- round(length(d$sex[d$sex == "female"])/length(d$sex)* 100) #percentage
+aget2 <- round(quantile(d$agemth_ht2,na.rm = T), 2)
+aget3 <- round(quantile(d$agemth_ht3,na.rm = T), 2)
+aged23 <- round(quantile(d$agemth_ht3-d$agemth_ht2, na.rm=T), 2)
 telo1med <- round(quantile(d$TS_t2, na.rm=TRUE),2)
 telo1bpmed <- round(quantile(d$ts_t2_bp, na.rm=TRUE))
 telo2med <- round(quantile(d$TS_t3, na.rm=TRUE),2)
@@ -36,60 +41,89 @@ PPS <- round(quantile(d$pss_sum_mom_t3, na.rm=TRUE))
 viol <- round(mean(d$life_viol_any_t3, na.rm=TRUE) * 100) #percentage
 
 #create table
-tbl <- data.table(" "=character(), " "=character(), " "=character(), "n (%) or median (25th percentile, 75th percentile)"=numeric())
+tbl <- data.table("1"=character(), "2"=character(), "3"=character(), "4"=numeric())
 tbl <- rbind(tbl, list("Child", " ", "Female (%)", paste(length(d$sex[d$sex == "female"]), " (", female, "%)", sep="")))
+tbl <- rbind(tbl, list(" ", " ", "Age (months) at Year 1", paste(aget2[3]," (", aget2[2], ", ", aget2[4], ")", sep="")))
+tbl <- rbind(tbl, list(" ", " ", "Age (months) at Year 2", paste(aget3[3]," (", aget3[2], ", ", aget3[4], ")", sep="")))
+tbl <- rbind(tbl, list("", " ", "Months between telomere length measurements at Year 1 and Year 2", paste(aged23[3]," (", aged23[2], ", ", aged23[4], ")", sep="")))
 tbl <- rbind(tbl, list(" ", "Telomere length at Year 1", "T/S Ratio", paste(telo1med[3]," (", telo1med[2], ", ", telo1med[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(telo2med[3]," (", telo2med[2], ", ", telo2med[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 3 months, Month 3)", " " = "Length-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(weight_age_m3[3], " (", weight_age_m3[2], ", ", weight_age_m3[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(weight_length_m3[3], " (", weight_length_m3[2], ", ", weight_length_m3[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(headc_age_m3[3], " (", headc_age_m3[2], ", ", headc_age_m3[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 14 months, Year 1)", " " = "Length-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(length_y1[3], " (", length_y1[2], ", ", length_y1[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(weight_age_y1[3], " (", weight_age_y1[2], ", ", weight_age_y1[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(weight_length_y1[3], " (", weight_length_y1[2], ", ", weight_length_y1[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(headc_age_y1[3], " (", headc_age_y1[2], ", ", headc_age_y1[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 28 months, Year 2)", " " = "Length-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(length_y2[3], " (", length_y2[2], ", ", length_y2[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(weight_age_y2[3], " (", weight_age_y2[2], ", ", weight_age_y2[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(weight_length_y2[3], " (", weight_length_y2[2], ", ", weight_length_y2[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(headc_age_y2[3], " (", headc_age_y2[2], ", ", headc_age_y2[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Diarrhea (age 14 months, Year 1)", " " = "Caregiver-reported 7-day recall (%)", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(sum(d$diar7d_t2, na.rm=TRUE), " (", d_y1, "%)", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Diarrhea (age 28 months, Year 2)", " " = "Caregiver-reported 7-day recall (%)", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(sum(d$diar7d_t3, na.rm=TRUE), " (", d_y2, "%)", sep="")))
-tbl <- rbind(tbl, list(" " = "Mother", " " = " ", " " = "Age (years)", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(agem[3], " (", agem[2], ", ", agem[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry at enrollment", " " = "Height (cm)", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(heightm[3], " (", heightm[2], ", ", heightm[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Education", " " = "Schooling completed (years)", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(edumom[3], " (", edumom[2], ", ", edumom[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 1", " " = "CESD-R score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(CES_D1[3], " (", CES_D1[2], ", ", CES_D1[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Depression at Year 2", " " = "CESD-R score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(CES_D2[3], " (", CES_D2[2], ", ", CES_D2[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Perceived stress at Year 2", " " = "Perceived Stress Scale score", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(PPS[3], " (", PPS[2], ", ", PPS[4], ")", sep="")))
-tbl <- rbind(tbl, list(" " = " ", " " = "Physical, sexual, or emotional intimate partner violence", " " = "Any lifetime exposure: number of women (%)", 
-                       "n (%) or median (25th percentile, 75th percentile)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Telomere length at Year 2", "3" = "T/S Ratio", 
+                       "4" = paste(telo2med[3]," (", telo2med[2], ", ", telo2med[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Change in telomere length between Year 1 and Year 2", "3" = "T/S Ratio", 
+                       "4" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Anthropometry (age 3 months, Month 3)", "3" = "Length-for-age Z score", 
+                       "4" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Weight-for-age Z score", 
+                       "4" = paste(weight_age_m3[3], " (", weight_age_m3[2], ", ", weight_age_m3[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Weight-for-length Z score", 
+                       "4" = paste(weight_length_m3[3], " (", weight_length_m3[2], ", ", weight_length_m3[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Head circumference-for-age Z score", 
+                       "4" = paste(headc_age_m3[3], " (", headc_age_m3[2], ", ", headc_age_m3[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Anthropometry (age 14 months, Year 1)", "3" = "Length-for-age Z score", 
+                       "4" = paste(length_y1[3], " (", length_y1[2], ", ", length_y1[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Weight-for-age Z score", 
+                       "4" = paste(weight_age_y1[3], " (", weight_age_y1[2], ", ", weight_age_y1[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Weight-for-length Z score", 
+                       "4" = paste(weight_length_y1[3], " (", weight_length_y1[2], ", ", weight_length_y1[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Head circumference-for-age Z score", 
+                       "4" = paste(headc_age_y1[3], " (", headc_age_y1[2], ", ", headc_age_y1[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Anthropometry (age 28 months, Year 2)", "3" = "Length-for-age Z score", 
+                       "4" = paste(length_y2[3], " (", length_y2[2], ", ", length_y2[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Weight-for-age Z score", 
+                       "4" = paste(weight_age_y2[3], " (", weight_age_y2[2], ", ", weight_age_y2[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Weight-for-length Z score", 
+                       "4" = paste(weight_length_y2[3], " (", weight_length_y2[2], ", ", weight_length_y2[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = " ", "3" = "Head circumference-for-age Z score", 
+                       "4" = paste(headc_age_y2[3], " (", headc_age_y2[2], ", ", headc_age_y2[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Diarrhea (age 14 months, Year 1)", "3" = "Caregiver-reported 7-day recall (%)", 
+                       "4" = paste(sum(d$diar7d_t2, na.rm=TRUE), " (", d_y1, "%)", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Diarrhea (age 28 months, Year 2)", "3" = "Caregiver-reported 7-day recall (%)", 
+                       "4" = paste(sum(d$diar7d_t3, na.rm=TRUE), " (", d_y2, "%)", sep="")))
+tbl <- rbind(tbl, list("1" = "Mother", "2" = " ", "3" = "Age (years)", 
+                       "4" = paste(agem[3], " (", agem[2], ", ", agem[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Anthropometry at enrollment", "3" = "Height (cm)", 
+                       "4" = paste(heightm[3], " (", heightm[2], ", ", heightm[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Education", "3" = "Schooling completed (years)", 
+                       "4" = paste(edumom[3], " (", edumom[2], ", ", edumom[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Depression at Year 1", "3" = "CESD-R score**", 
+                       "4" = paste(CES_D1[3], " (", CES_D1[2], ", ", CES_D1[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Depression at Year 2", "3" = "CESD-R score**", 
+                       "4" = paste(CES_D2[3], " (", CES_D2[2], ", ", CES_D2[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Perceived stress at Year 2", "3" = "Perceived Stress Scale score", 
+                       "4" = paste(PPS[3], " (", PPS[2], ", ", PPS[4], ")", sep="")))
+tbl <- rbind(tbl, list("1" = " ", "2" = "Physical, sexual, or emotional intimate partner violence", "3" = "Any lifetime exposure: number of women (%)", 
+                       "4" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")))
+
+library(flextable)
+library(officer)
+
+tblflex <- flextable(tbl, col_keys=names(tbl))
+tblflex <- set_header_labels(tblflex,
+                              values = list("1" = "", "2" = "", "3" = "", "4" = "n (%) or median (IQR)"))
+tblflex <- hline_top(tblflex, part="header", border=fp_border(color="black", width = 1))
+tblflex <- hline_bottom(tblflex, part="all", border=fp_border(color="black", width = 1))
+tblflex <- autofit(tblflex, part = "all")
+tblflex <- align(tblflex, j = c(1, 2, 3), align = "left", part="all")
+tblflex <- align(tblflex, j = 4, align = "center", part="all")
+tblflex <- fit_to_width(tblflex, max_width=8)
+tblflex <- add_footer_row(tblflex, top=F, 
+                          values = "*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)", colwidths = 4)
+tblflex <- add_footer_row(tblflex, top=F, 
+                          values = "**CESD-R = Center for Epidemiologic Studies Depression Scale Revised", colwidths = 4)
+
 
 # export table as csv
 write.csv(tbl, file = here("tables/main/telo_growth_table1.csv"))
 write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/main/telo_growth_table1.csv"),append=TRUE)
+write("**CESD-R = Center for Epidemiologic Studies Depression Scale Revised",file=here("tables/main/telo_growth_table1.csv"),append=TRUE)
+
 print(xtable(tbl), type="html", file=here("tables/main/telo_growth_table1.html"))
 write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/main/telo_growth_table1.html"),append=TRUE)
+write("**CESD-R = Center for Epidemiologic Studies Depression Scale Revised",file=here("tables/main/telo_growth_table1.html"),append=TRUE)
 
-
+sect_properties <- prop_section(
+  page_size = page_size(orient = "portrait", width=8.5, height=11),
+  page_margins = page_mar(bottom=.3, top=.3, right=.3, left=.3, gutter = 0)
+)
+save_as_docx("Table 1" = tblflex, path='C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth-enrollment.docx', 
+             pr_section = sect_properties) 
