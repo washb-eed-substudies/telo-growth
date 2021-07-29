@@ -7,7 +7,6 @@ source(here::here("table scripts/table-functions.R"))
 
 
 # load enrollment characteristics and results
-load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
 H1 <- readRDS(here('results/gam_results/unadjusted/telot2_res.RDS'))
 H2 <- readRDS(here('results/gam_results/unadjusted/telot3_res.RDS'))
 H3 <- readRDS(here('results/gam_results/unadjusted/dtelo_res.RDS'))
