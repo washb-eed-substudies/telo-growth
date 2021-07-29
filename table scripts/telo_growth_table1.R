@@ -8,10 +8,10 @@ box_auth()
 d <- box_read(830186133564)
 
 # calculating quantiles/n for each variable 
-female <- round(length(d$sex[d$sex == "female"])/length(d$sex)* 100) #percentage
-aget2 <- round(quantile(d$agemth_ht2,na.rm = T), 2)
-aget3 <- round(quantile(d$agemth_ht3,na.rm = T), 2)
-aged23 <- round(quantile(d$agemth_ht3-d$agemth_ht2, na.rm=T), 2)
+female <- round(length(d$sex[d$sex == 0])/sum(!is.na(d$sex))* 100) #percentage
+aget2 <- round(quantile(d$agemth_ht2,na.rm = T), 1)
+aget3 <- round(quantile(d$agemth_ht3,na.rm = T), 1)
+aged23 <- round(quantile(d$agemth_ht3-d$agemth_ht2, na.rm=T), 1)
 telo1med <- round(quantile(d$TS_t2, na.rm=TRUE),2)
 telo1bpmed <- round(quantile(d$ts_t2_bp, na.rm=TRUE))
 telo2med <- round(quantile(d$TS_t3, na.rm=TRUE),2)
@@ -42,7 +42,7 @@ viol <- round(mean(d$life_viol_any_t3, na.rm=TRUE) * 100) #percentage
 
 #create table
 tbl <- data.table("1"=character(), "2"=character(), "3"=character(), "4"=numeric())
-tbl <- rbind(tbl, list("Child", " ", "Female (%)", paste(length(d$sex[d$sex == "female"]), " (", female, "%)", sep="")))
+tbl <- rbind(tbl, list("Child", " ", "Female (%)", paste(length(d$sex[d$sex == 0]), " (", female, "%)", sep="")))
 tbl <- rbind(tbl, list(" ", " ", "Age (months) at Year 1", paste(aget2[3]," (", aget2[2], ", ", aget2[4], ")", sep="")))
 tbl <- rbind(tbl, list(" ", " ", "Age (months) at Year 2", paste(aget3[3]," (", aget3[2], ", ", aget3[4], ")", sep="")))
 tbl <- rbind(tbl, list("", " ", "Months between telomere length measurements at Year 1 and Year 2", paste(aged23[3]," (", aged23[2], ", ", aged23[4], ")", sep="")))
@@ -125,5 +125,5 @@ sect_properties <- prop_section(
   page_size = page_size(orient = "portrait", width=8.5, height=11),
   page_margins = page_mar(bottom=.3, top=.3, right=.3, left=.3, gutter = 0)
 )
-save_as_docx("Table 1" = tblflex, path='C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth-enrollment.docx', 
+save_as_docx("Table 1: Characteristics of Participants" = tblflex, path='C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth-enrollment.docx', 
              pr_section = sect_properties) 
