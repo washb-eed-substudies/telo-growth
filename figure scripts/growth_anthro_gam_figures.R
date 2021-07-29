@@ -70,21 +70,27 @@ head(d)
 #' -Supplementary Figures updated (no density plots)
 #' -1 new supp figure: density plot comparing before and after regression to the mean.
 #' Thanks!
+#' 
+
 
 yrange <- c(-0.4,0.5)
-ylabel="Adjusted difference in mean anthropometry Z-score\nbetween 25th and 75th percentile of Telomere measure"
+ylabel="Adjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure"
 plotdf <- d %>% filter(H!=3, grepl("laz",Y)| grepl("waz",Y)| grepl("wlz",Y)| grepl("hcz",Y), !grepl("_Z",A))
 plotdf <- plotdf %>% mutate(
   group = case_when(
-    grepl("delta_",Y) & grepl("_t2",A) ~ "Change in anthropometry\nTelomere length at year 1",
-    grepl("_t3",Y) & grepl("_t2",A) ~ "Anthropometry at year 2\nTelomere length at year 1",
-    grepl("_t2",Y) & grepl("_t2",A) ~ "Anthropometry and Telomere\nlength measured at year 1",
-    grepl("_t3",Y) & grepl("_t3",A) ~ "Anthropometry and Telomere\nlength measured at year 2"
-  )
+    grepl("delta_",Y) & grepl("_t2",A) ~ "Change in telomere length\nbetween Years 1 and 2 and growth\n",
+    grepl("_t2",A) ~ "Telomere length at\nYear 1 and growth\n",
+    grepl("_t3",Y) & grepl("_t3",A) ~ "Telomere length at\nYear 2 and growth\n"
+  ),
+  group=factor(group, levels=c("Telomere length at\nYear 1 and growth\n",
+                               "Telomere length at\nYear 2 and growth\n",
+                               "Change in telomere length\nbetween Years 1 and 2 and growth\n")),
+  Y_time=ifelse(grepl("_t3",Y),"Year 2","Year 1")
 )
 
+
 p <- ggplot(plotdf, aes(x=anthro, y=point.diff)) + 
-  geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=anthro, group=anthro), #, group=Time, shape=Time),
+  geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=anthro, group=Y_time, shape=Y_time),
                   position = position_dodge(width = 0.4),
                   size = 1) +
   #geom_text(aes(label=ref), position = position_nudge(y = (abs(yrange[1])+abs(yrange[2]))/10)) +
@@ -92,23 +98,16 @@ p <- ggplot(plotdf, aes(x=anthro, y=point.diff)) +
   labs(y = ylabel, x =  "Anthropometry measure") +
   geom_hline(yintercept = 0) +
   coord_cartesian(ylim=yrange) +
-  scale_shape_manual(values=c(16,21)) +
+  scale_shape_manual(values=c(21,16)) +
   scale_colour_manual(values=tableau10) + 
-  ggtitle("Timing of exposure measurement") +
   theme_ki() +
   theme(plot.title = element_text(hjust = 0),
         panel.spacing = unit(0, "lines"),
         legend.position = "right")+
-  guides(color = "none")
+  guides(color = "none", shape=guide_legend(title="Anthropometry\nmeasurement\ntime"))
 p
 
 
-# pH1 <- tmle_plot_fun(d, 1, title="", ylabel="Difference in\nchange in Z-score")
-# pH2 <- tmle_plot_fun(d, 2, yrange=c(-0.065, 0.03), title="", cols=tableau10[c(5:7)],  ylabel="Difference in\nvelocity in cm or kg")
-# pH3 <- tmle_plot_fun(d, 3, title="", ylabel="Difference in mean Z-score")
-# pH5 <- tmle_plot_fun(d, 5, title="", ylabel="Difference in mean Z-score")
-# pH7 <- tmle_plot_fun(d, 7, yrange=c(-0.03, 0.03), title="", cols=tableau10[c(5:7)], ylabel="Difference in\nvelocity in cm or kg")
-# pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
 
 
-#ggsave(p, file = here("figures/telo-growth-quartiles-differences_supp5.tiff"), height=6, width=14)
+ggsave(p, file = here("figures/telo-growth-gam-differences-fig1.tiff"), height=6, width=14)
