@@ -258,7 +258,7 @@ for(i in Xvars){
     }else{
       Wvars <- Wvars_23_3
     }
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars_2_3)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wvars)
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H3_adj_models <- bind_rows(H3_adj_models, res)
   }

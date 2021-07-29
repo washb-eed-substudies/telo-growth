@@ -82,12 +82,12 @@ write.csv(tbl3supp, here('tables/gam/telo-growth-supptable3.csv'))
 save_as_docx("Table 2: Association Between Telomere Length at Year 1 and Growth" = tbl1flex, 
              "Table 3: Association Between Telomere Length at Year 2 and Growth" = tbl2flex, 
              "Table 4: Association Between Change in Telomere Length and Growth" = tbl3flex, 
-             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth main gam tables.docx",
+             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth main gam tables 07.29.21.docx",
              pr_section = sect_properties)
 
 save_as_docx("Table S1: Association Between Telomere Length at Year 1 and Growth" = tbl1flexsupp, 
              "Table S2: Association Between Telomere Length at Year 2 and Growth" = tbl2flexsupp, 
              "Table S3: Association Between Change in Telomere Length and Growth" = tbl3flexsupp, 
-             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth supplementary gam tables.docx",
+             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth supplementary gam tables 07.29.21.docx",
              pr_section = sect_properties)
 
