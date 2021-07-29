@@ -154,6 +154,20 @@ saveRDS(H3_res, here("results/gam_results/unadjusted/twin_dtelo_res.RDS"))
 #Save plot data
 saveRDS(H3_plot_data, here("results/gam_figure_data/unadjusted/twin_dtelo_unadj_spline_data.RDS"))
 
+H1_res$H = 1
+H2_res$H = 2
+H3_res$H = 3
+
+full_res <- rbind(H1_res, H2_res, H3_res)
+full_res <- full_res %>% group_by(Y) %>% 
+  mutate(BH.Pval=p.adjust(Pval, method="BH")) %>%
+  ungroup() %>%
+  as.data.frame()
+
+saveRDS(full_res %>% filter(H==1) %>% select(-H), here("results/gam_results/unadjusted/twin_telot2_res.RDS"))
+saveRDS(full_res %>% filter(H==2) %>% select(-H), here("results/gam_results/unadjusted/twin_telot3_res.RDS"))
+saveRDS(full_res %>% filter(H==3) %>% select(-H), here("results/gam_results/unadjusted/twin_dtelo_res.RDS"))
+
 
 #clean covariates
 for(i in 1:ncol(d)){
@@ -434,3 +448,16 @@ saveRDS(H3_adj_res, here("results/gam_results/adjusted/twin_dtelo_adj_res.RDS"))
 #Save plot data
 saveRDS(H3_plot_data, here("results/gam_figure_data/adjusted/twin_dtelo_adj_spline_data.RDS"))
 
+H1_adj_res$H = 1
+H2_adj_res$H = 2
+H3_adj_res$H = 3
+
+full_adj_res <- rbind(H1_adj_res, H2_adj_res, H3_adj_res)
+full_adj_res <- full_adj_res %>% group_by(Y) %>% 
+  mutate(BH.Pval=p.adjust(Pval, method="BH")) %>%
+  ungroup() %>%
+  as.data.frame()
+
+saveRDS(full_adj_res %>% filter(H==1) %>% select(-H), here("results/gam_results/adjusted/twin_telot2_adj_res.RDS"))
+saveRDS(full_adj_res %>% filter(H==2) %>% select(-H), here("results/gam_results/adjusted/twin_telot3_adj_res.RDS"))
+saveRDS(full_adj_res %>% filter(H==3) %>% select(-H), here("results/gam_results/adjusted/twin_dtelo_adj_res.RDS"))
