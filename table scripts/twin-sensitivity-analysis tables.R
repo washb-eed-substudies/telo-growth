@@ -30,6 +30,8 @@ out_var <- c("LAZ Year 1", "WAZ Year 1", "WLZ Year 1", "HCZ Year 1",
              "Length velocity between Year 1 and Year 2", "Weight velocity between Year 1 and Year 2",
              "Head circumference velocity between Year 1 and Year 2")
 
+tbl1 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, T)
+tbl1flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, T, exp_col_size = 1.3, out_col_size = 1.5)
 tbl1supp <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj)
 tbl1flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H1, H1adj, F, exp_col_size = 1, out_col_size = 1.3)
 
@@ -40,6 +42,8 @@ outcome <- c("laz_t3", "waz_t3", "whz_t3" ,"hcz_t3")
 expo_var <- c("Telomere length at Year 2")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2")
 
+tbl2 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, T)
+tbl2flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, T, 1.1, .7)
 tbl2supp <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj)
 tbl2flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, F, 1.1, .7)
 
@@ -57,6 +61,8 @@ out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2",
              "Length velocity between Year 1 and Year 2", "Weight velocity between Year 1 and Year 2",
              "Head circumference velocity between Year 1 and Year 2")
 
+tbl3 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, T)
+tbl3flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, T, 1.1, 1.3)
 tbl3supp <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj)
 tbl3flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, H3, H3adj, F, 1.1, 1.3)
 
@@ -64,6 +70,12 @@ tbl3flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome
 
 
 #### SAVE TABLES ####
+save_as_docx("Twin Sensitivity Analysis: Association Between Telomere Length at Year 1 and Growth" = tbl1flex, 
+             "Twin Sensitivity Analysis: Association Between Telomere Length at Year 2 and Growth" = tbl2flex, 
+             "Twin Sensitivity Analysis: Association Between Change in Telomere Length and Growth" = tbl3flex, 
+             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth twin sensitivity analysis adjusted tables.docx",
+             pr_section = sect_properties)
+
 save_as_docx("Twin Sensitivity Analysis: Association Between Telomere Length at Year 1 and Growth" = tbl1flexsupp, 
              "Twin Sensitivity Analysis: Association Between Telomere Length at Year 2 and Growth" = tbl2flexsupp, 
              "Twin Sensitivity Analysis: Association Between Change in Telomere Length and Growth" = tbl3flexsupp, 
