@@ -4,7 +4,10 @@ rm(list=ls())
 #renv::deactivate()
 source(here::here("0-config.R"))
 
-load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
+library(boxr)
+box_auth()
+d <- box_read_csv(839767614700)
+
 # Z-score telomere length
 d <- d %>%
   mutate(TS_t2_Z = scale(TS_t2, center=T, scale=T)[,1]) %>%
@@ -201,8 +204,22 @@ print = TRUE
   tab$pval <- gsub("0.000", "<0.001", tab$pval)
   colnames(tab)[2] <-"P-value"       
   tab        
-          
-  knitr::kable(tab, format="pipe")      
+  
+  tab$Covariate
+  tab$Covariate <- c("Maternal height (cm)", "Household assets - working black/white or color television",
+                     "Household assets - refrigerator", "Maternal education level (no education, primary secondary)",
+                     "Food insecurity (4-level HFIAS categories)", "Household assets - wardrobe", "Household assets - khat",
+                     "Housing materials - floor", "Household assets - watch or clock", "Household assets - electricity", 
+                     "Household assets - chair or bench", "Household assets - table", "Number of individuals living in the compound",
+                     "Household assets  - number of cows", "Household assets - mobile phone", "Household assets - number of chickens",
+                     "Household assets - working radio", "Household assets - sewing machine", "Household assets - motorcycle",
+                     "Housing materials - walls", "Maternal CESD-R Scale Score at Year 1", "Household assets - bicycle",
+                     "Distance in minutes to primary drinking water source", "Household assets - number of goats", "Caregiver-reported diarrhea at Year 1",
+                     "Child birth order", "Maternal age (years)", "Season of measurement at Year 1", "Household assets - chouki", 
+                     "Child sex", "Number of children <18 in the household", "Maternal lifetime cumulative exposure to intimate partner violence")
+  tab
+  
+  flextable(tab) %>% autofit() %>% save_as_image(path = here("tables/example-prescreening.png"))
           
           
    
