@@ -9,7 +9,7 @@ theme_set(theme_ki())
 
 
 #Load tmle results
-load(here("/results/telo_growth_spline_fits.Rdata"))
+load(paste0(here::here(),"/results/telo_growth_spline_fits.Rdata"))
 
 #Load TMLE results for quartiles
 quartiles <- readRDS(here("results/ATE_figure_data.RDS"))
@@ -35,43 +35,43 @@ unique(quartiles_wide$A)
 
 
 d1 <- rbind(
-  data.frame(x="Change in T/S ratio", y="Change in LAZ\nbetween years 1 and 2", h1_delta_laz_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="delta_laz_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="Change in WAZ\nbetween years 1 and 2", h1_delta_whz_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="delta_waz_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="Change in WLZ\nbetween years 1 and 2", h1_delta_waz_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="delta_whz_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="Change in HCZ\nbetween years 1 and 2", h1_delta_hcz_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="delta_hcz_t2_t3")%>%select(Q1:Q4)))
+  data.frame(x="Change in T/S ratio", y="Change in LAZ\nbetween years 1 and 2", h1_delta_laz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in WAZ\nbetween years 1 and 2", h1_delta_whz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in WLZ\nbetween years 1 and 2", h1_delta_waz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in HCZ\nbetween years 1 and 2", h1_delta_hcz_v_delta_tsgam.res))
 d2 <- rbind(
-  data.frame(x="Change in T/S ratio", y="Length velocity (cm/mo)\nbetween years 1 and 2", h2_len_velocity_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="len_velocity_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="Weight velocity (kg/mo)\nbetween years 1 and 2", h2_wei_velocity_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="wei_velocity_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="Head circumference velocity (cm/mo)\nbetween years 1 and 2", h2_hc_velocity_v_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="hc_velocity_t2_t3")%>%select(Q1:Q4)))
+  data.frame(x="Change in T/S ratio", y="Length velocity (cm/mo)\nbetween years 1 and 2", h2_len_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Weight velocity (kg/mo)\nbetween years 1 and 2", h2_wei_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Head circumference velocity (cm/mo)\nbetween years 1 and 2", h2_hc_velocity_v_delta_tsgam.res))
 d3 <- rbind(
-  data.frame(x="Change in T/S ratio", y="LAZ - year 2", h3_laz_t3_vs_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="laz_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="WAZ - year 2", h3_waz_t3_vs_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="waz_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="WLZ - year 2", h3_whz_t3_vs_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="whz_t3")%>%select(Q1:Q4)),
-  data.frame(x="Change in T/S ratio", y="HCZ - year 2", h3_hcz_t3_vs_delta_tsgam.res, quartiles_wide%>%filter(A=="delta_TS", Y=="hcz_t3")%>%select(Q1:Q4)))
+  data.frame(x="Change in T/S ratio", y="LAZ - year 2", h3_laz_t3_vs_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="WAZ - year 2", h3_waz_t3_vs_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="WLZ - year 2", h3_whz_t3_vs_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="HCZ - year 2", h3_hcz_t3_vs_delta_tsgam.res))
 d4 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="LAZ - year 1", h4_laz_t2_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="laz_t2")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="WAZ - year 1", h4_waz_t2_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="waz_t2")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="WLZ - year 1", h4_whz_t2_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="whz_t2")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="HCZ - year 1", h4_hcz_t2_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="hcz_t2")%>%select(Q1:Q4)))
+  data.frame(x="T/S ratio - year 1", y="LAZ - year 1", h4_laz_t2_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WAZ - year 1", h4_waz_t2_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WLZ - year 1", h4_whz_t2_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="HCZ - year 1", h4_hcz_t2_vs_ts_t2gam.res))
 d5 <- rbind(
-  data.frame(x="T/S ratio - year 2", y="LAZ - year 2", h5_laz_t3_vs_ts_t3gam.res, quartiles_wide%>%filter(A=="TS_t3", Y=="laz_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 2", y="WAZ - year 2", h5_waz_t3_vs_ts_t3gam.res, quartiles_wide%>%filter(A=="TS_t3", Y=="waz_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 2", y="WLZ - year 2", h5_whz_t3_vs_ts_t3gam.res, quartiles_wide%>%filter(A=="TS_t3", Y=="whz_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 2", y="HCZ - year 2", h5_hcz_t3_vs_ts_t3gam.res, quartiles_wide%>%filter(A=="TS_t3", Y=="hcz_t3")%>%select(Q1:Q4)))
+  data.frame(x="T/S ratio - year 2", y="LAZ - year 2", h5_laz_t3_vs_ts_t3gam.res),
+  data.frame(x="T/S ratio - year 2", y="WAZ - year 2", h5_waz_t3_vs_ts_t3gam.res),
+  data.frame(x="T/S ratio - year 2", y="WLZ - year 2", h5_whz_t3_vs_ts_t3gam.res),
+  data.frame(x="T/S ratio - year 2", y="HCZ - year 2", h5_hcz_t3_vs_ts_t3gam.res))
 d6 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="LAZ - year 2", h6_laz_t3_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="laz_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="WAZ - year 2", h6_waz_t3_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="waz_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="WLZ - year 2", h6_whz_t3_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="whz_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="HCZ - year 2", h6_hcz_t3_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="hcz_t3")%>%select(Q1:Q4)))
+  data.frame(x="T/S ratio - year 1", y="LAZ - year 2", h6_laz_t3_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WAZ - year 2", h6_waz_t3_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WLZ - year 2", h6_whz_t3_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="HCZ - year 2", h6_hcz_t3_vs_ts_t2gam.res))
 d7 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="Length velocity (cm/mo)\nbetween years 1 and 2", h7_len_veloc_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="len_velocity_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="Weight velocity (kg/mo)\nbetween years 1 and 2", h7_wei_veloc_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="wei_velocity_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="Head circumference velocity (cm/mo)\nbetween years 1 and 2", h7_hc_veloc_vs_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="hc_velocity_t2_t3")%>%select(Q1:Q4)))
+  data.frame(x="T/S ratio - year 1", y="Length velocity (cm/mo)\nbetween years 1 and 2", h7_len_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Weight velocity (kg/mo)\nbetween years 1 and 2", h7_wei_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Head circumference velocity (cm/mo)\nbetween years 1 and 2", h7_hc_veloc_vs_ts_t2gam.res))
 d8 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="Change in LAZ\nbetween years 1 and 2", h8_delta_laz_v_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="delta_laz_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="Change in WAZ\nbetween years 1 and 2", h8_delta_waz_v_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="delta_waz_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="Change in WLZ\nbetween years 1 and 2", h8_delta_whz_v_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="delta_whz_t2_t3")%>%select(Q1:Q4)),
-  data.frame(x="T/S ratio - year 1", y="Change in HCZ\nbetween years 1 and 2", h8_delta_hcz_v_ts_t2gam.res, quartiles_wide%>%filter(A=="TS_t2", Y=="delta_hcz_t2_t3")%>%select(Q1:Q4)))
+  data.frame(x="T/S ratio - year 1", y="Change in LAZ\nbetween years 1 and 2", h8_delta_laz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in WAZ\nbetween years 1 and 2", h8_delta_waz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in WLZ\nbetween years 1 and 2", h8_delta_whz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in HCZ\nbetween years 1 and 2", h8_delta_hcz_v_ts_t2gam.res))
 
 d1$y <- factor(d1$y)
 d2$y <- factor(d2$y)
@@ -106,27 +106,27 @@ spline_plot_functions <- function(d){
   
   p1 <- d[d$y==levels(d$y)[1],] %>% {ggplot(.,aes(x = X)) +
     geom_smooth(aes(y = fit, color=y), se = F) +
-      geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-      geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-      geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
       # geom_vline(aes(xintercept = Q1), linetype=1, color="grey20") +
       # geom_vline(aes(xintercept = Q2), linetype=1, color="grey20") +
       # geom_vline(aes(xintercept = Q3), linetype=1, color="grey20") +
     geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
     geom_point(aes(y=Y), alpha=0.5) +
-    coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
+    coord_cartesian(xlim = c(.$x.lb[1], .$x.ub[1]), ylim = c(.$y.lb[1], .$y.ub[1])) +
     scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     xlab(.$x[1]) + ylab(.$y[1])
   }
   p2 <- d[d$y==levels(d$y)[2],] %>% {ggplot(.,aes(x = X)) +
       geom_smooth(aes(y = fit, color=y), se = F) +
-      geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-      geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-      geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
       geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
       geom_point(aes(y=Y), alpha=0.5) +
-      coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
+      coord_cartesian(xlim = c(.$x.lb[1], .$x.ub[1]), ylim = c(.$y.lb[1], .$y.ub[1])) +
       scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
       scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
       xlab(.$x[1]) + ylab(.$y[1])
@@ -134,11 +134,11 @@ spline_plot_functions <- function(d){
   p3 <- d[d$y==levels(d$y)[3],] %>% {ggplot(.,aes(x = X)) +
       geom_smooth(aes(y = fit, color=y), se = F) +
       geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
-      geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-      geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-      geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+      # geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
       geom_point(aes(y=Y), alpha=0.5) +
-      coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
+      coord_cartesian(xlim = c(.$x.lb[1], .$x.ub[1]), ylim = c(.$y.lb[1], .$y.ub[1])) +
       scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
       scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
       xlab(.$x[1]) + ylab(.$y[1])
@@ -148,10 +148,10 @@ spline_plot_functions <- function(d){
         geom_smooth(aes(y = fit, color=y), se = F) +
         geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
         geom_point(aes(y=Y), alpha=0.5) +
-        geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-        geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-        geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
-        coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
+        # geom_rug(aes(x=Q1), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+        # geom_rug(aes(x=Q2), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+        # geom_rug(aes(x=Q3), sides="b", length = unit(0.15, "npc"), size=1, color="grey30") +
+        coord_cartesian(xlim = c(.$x.lb[1], .$x.ub[1]), ylim = c(.$y.lb[1], .$y.ub[1])) +
         scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
         scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
         xlab(.$x[1]) + ylab(.$y[1])

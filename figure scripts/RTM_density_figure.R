@@ -27,3 +27,18 @@ p <- ggplot(data=plotdf, aes(x=TS,group=group, fill=group)) +
   guides(color = "none",alpha = "none", fill=guide_legend(title=""))
 
 p
+
+ggplot(d, aes(x=raw_delta_TS, y=delta_TS), color="grey30") + geom_point(alpha=0.8) + geom_smooth(method="lm", se=F, color="grey30") +
+  xlab("Uncorrected T/S") + ylab("Corrected change in T/S")
+
+#scatter plots
+test_res <- cor.test(d$TS_t2, d$delta_TS)
+
+test_res$p.value
+cor_label <- paste0("r = ",round(test_res$estimate,2), ", P-value < 0.001")
+test_res$cor_label <- NA
+test_res$cor_label[1] <- cor_label
+p2 <- ggplot(d, aes(x=TS_t2, y=delta_TS), color="grey30") + geom_point(alpha=0.8) + geom_smooth(method="lm", se=F, color="grey30") +
+  xlab("Baseline T/S") + ylab("Change in T/S") + geom_text(label=cor_label, x=2.35, y=1, size=5)
+
+ggsave(p2, file = here("figures/telo-growth-RTM-scatter.tiff"), height=6, width=6)
