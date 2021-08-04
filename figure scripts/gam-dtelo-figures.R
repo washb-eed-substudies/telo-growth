@@ -67,7 +67,7 @@ head(d)
 tail(d)
 
 yrange <- c(-0.4,0.5)
-ylabel="Unadjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure\n"
+ylabel="Unadjusted difference in mean anthropometry Z score\nbetween 10th and 90th percentile of telomere measure\n"
 
 d <- d %>% mutate(group = case_when(
                     grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2 and growth\n",
@@ -154,7 +154,7 @@ head(d)
 tail(d)
 
 yrange <- c(-0.4,0.5)
-ylabel="Adjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure\n"
+ylabel="Adjusted difference in mean anthropometry Z score\nbetween 10th and 90th percentile of telomere measure\n"
 
 d <- d %>% mutate(group = case_when(
   grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2 and growth\n",
