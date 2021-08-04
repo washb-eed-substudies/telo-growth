@@ -44,22 +44,22 @@ d <- d %>% arrange(Y) %>%
       A=="delta_TS" ~ "RTM corrected change",
       A=="raw_delta_TS" ~ "Uncorrected change"),
     anthro = case_when(
-      grepl("delta_laz", Y) ~ "DELTA LAZ",
-      grepl("delta_waz", Y) ~ "DELTA WAZ",
-      grepl("delta_wlz", Y) ~ "DELTA WLZ",
-      grepl("delta_hcz", Y) ~ "DELTA HCZ",
+      grepl("delta_laz", Y) ~ "Δ LAZ",
+      grepl("delta_waz", Y) ~ "Δ WAZ",
+      grepl("delta_wlz", Y) ~ "Δ WLZ",
+      grepl("delta_hcz", Y) ~ "Δ HCZ",
       grepl("laz_t3",Y) ~ "LAZ",
       grepl("waz_t3",Y) ~ "WAZ",
       grepl("wlz_t3",Y) ~ "WLZ",
       grepl("hcz_t3",Y) ~ "HCZ",
-      grepl("len_",Y) ~ "LEN",
-      grepl("wei_",Y) ~ "WEIGHT",
-      grepl("hc_",Y) ~ "HCIR"
+      grepl("len_",Y) ~ "LENGTH\n",
+      grepl("wei_",Y) ~ "WEIGHT\n",
+      grepl("hc_",Y) ~ "HEAD\nCIRCUMFERENCE"
     ),
     anthro=factor(anthro,
                   levels = c("LAZ","WAZ","WLZ","HCZ",
-                             "DELTA LAZ", "DELTA WAZ", "DELTA WLZ", "DELTA HCZ",
-                             "LEN","WEIGHT","HCIR"))) %>%
+                             "Δ LAZ", "Δ WAZ", "Δ WLZ", "Δ HCZ",
+                             "LENGTH\n","WEIGHT\n","HEAD\nCIRCUMFERENCE"))) %>%
   arrange(anthro) %>%
   mutate(Ylab = factor(Ylab, levels=unique(Ylab)))
 
@@ -67,7 +67,7 @@ head(d)
 tail(d)
 
 yrange <- c(-0.4,0.5)
-ylabel="Unadjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure"
+ylabel="Unadjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure\n"
 
 d <- d %>% mutate(group = case_when(
                     grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2 and growth\n",
@@ -80,7 +80,7 @@ p <- ggplot(d, aes(x=anthro, y=point.diff)) +
                   position = position_dodge(width = 0.4),
                   size = 1) +
   facet_grid(~group, scales = "free_x") +
-  labs(y = ylabel, x =  "Anthropometry measure") +
+  labs(y = ylabel, x =  "\nAnthropometry measure") +
   geom_hline(yintercept = 0) +
   coord_cartesian(ylim=yrange) +
   scale_shape_manual(values=c(21,16)) +
@@ -131,22 +131,22 @@ d <- d %>% arrange(Y) %>%
       A=="delta_TS" ~ "RTM corrected change",
       A=="raw_delta_TS" ~ "Uncorrected change"),
     anthro = case_when(
-      grepl("delta_laz", Y) ~ "DELTA LAZ",
-      grepl("delta_waz", Y) ~ "DELTA WAZ",
-      grepl("delta_wlz", Y) ~ "DELTA WLZ",
-      grepl("delta_hcz", Y) ~ "DELTA HCZ",
+      grepl("delta_laz", Y) ~ "Δ LAZ",
+      grepl("delta_waz", Y) ~ "Δ WAZ",
+      grepl("delta_wlz", Y) ~ "Δ WLZ",
+      grepl("delta_hcz", Y) ~ "Δ HCZ",
       grepl("laz_t3",Y) ~ "LAZ",
       grepl("waz_t3",Y) ~ "WAZ",
       grepl("wlz_t3",Y) ~ "WLZ",
       grepl("hcz_t3",Y) ~ "HCZ",
-      grepl("len_",Y) ~ "LEN",
-      grepl("wei_",Y) ~ "WEIGHT",
-      grepl("hc_",Y) ~ "HCIR"
+      grepl("len_",Y) ~ "LENGTH\n",
+      grepl("wei_",Y) ~ "WEIGHT\n",
+      grepl("hc_",Y) ~ "HEAD\nCIRCUMFERENCE"
     ),
     anthro=factor(anthro,
                   levels = c("LAZ","WAZ","WLZ","HCZ",
-                             "DELTA LAZ", "DELTA WAZ", "DELTA WLZ", "DELTA HCZ",
-                             "LEN","WEIGHT","HCIR"))) %>%
+                             "Δ LAZ", "Δ WAZ", "Δ WLZ", "Δ HCZ",
+                             "LENGTH\n","WEIGHT\n","HEAD\nCIRCUMFERENCE"))) %>%
   arrange(anthro) %>%
   mutate(Ylab = factor(Ylab, levels=unique(Ylab)))
 
@@ -154,7 +154,7 @@ head(d)
 tail(d)
 
 yrange <- c(-0.4,0.5)
-ylabel="Adjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure"
+ylabel="Adjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure\n"
 
 d <- d %>% mutate(group = case_when(
   grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2 and growth\n",
@@ -167,7 +167,7 @@ p <- ggplot(d, aes(x=anthro, y=point.diff)) +
                   position = position_dodge(width = 0.4),
                   size = 1) +
   facet_grid(~group, scales = "free_x") +
-  labs(y = ylabel, x =  "Anthropometry measure") +
+  labs(y = ylabel, x =  "\nAnthropometry measure") +
   geom_hline(yintercept = 0) +
   coord_cartesian(ylim=yrange) +
   scale_shape_manual(values=c(21,16)) +
