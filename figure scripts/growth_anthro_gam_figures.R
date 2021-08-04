@@ -74,7 +74,7 @@ head(d)
 
 
 yrange <- c(-0.4,0.5)
-ylabel="Adjusted difference in mean anthropometry Z score\nbetween 25th and 75th percentile of telomere measure"
+ylabel="Adjusted difference in mean anthropometry Z score\nbetween 10th and 90th percentile of telomere measure"
 plotdf <- d %>% filter(H!=3, grepl("laz",Y)| grepl("waz",Y)| grepl("wlz",Y)| grepl("hcz",Y), !grepl("_Z",A))
 plotdf <- plotdf %>% mutate(
   group = case_when(

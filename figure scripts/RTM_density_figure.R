@@ -39,6 +39,6 @@ cor_label <- paste0("r = ",round(test_res$estimate,2), ", P-value < 0.001")
 test_res$cor_label <- NA
 test_res$cor_label[1] <- cor_label
 p2 <- ggplot(d, aes(x=TS_t2, y=delta_TS), color="grey30") + geom_point(alpha=0.8) + geom_smooth(method="lm", se=F, color="grey30") +
-  xlab("Baseline T/S") + ylab("Change in T/S") + geom_text(label=cor_label, x=2.35, y=1, size=5)
+  xlab("Baseline telomere length (T/S ratio) at Year 1") + ylab("Change in telomere length (T/S ratio) Between Years 1 and 2") + geom_text(label=cor_label, x=2.35, y=1, size=5)
 
 ggsave(p2, file = here("figures/telo-growth-RTM-scatter.tiff"), height=6, width=6)
