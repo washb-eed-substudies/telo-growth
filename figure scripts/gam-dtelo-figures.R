@@ -70,10 +70,10 @@ yrange <- c(-0.4,0.5)
 ylabel="Unadjusted difference in mean anthropometry Z score\nbetween 10th and 90th percentile of telomere measure\n"
 
 d <- d %>% mutate(group = case_when(
-                    grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2 and growth\n",
+                    grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2\n",
                     grepl("velocity", Y) ~ "Growth velocity \n between Years 1 and 2\n",
                     grepl("z_t3",Y) ~ "Growth at Year 2\n"),
-                  group = factor(group, levels = c("Growth at Year 2\n", "Change in growth \nbetween Years 1 and 2 and growth\n", 
+                  group = factor(group, levels = c("Growth at Year 2\n", "Change in growth \nbetween Years 1 and 2\n", 
                            "Growth velocity \n between Years 1 and 2\n")))
 p <- ggplot(d, aes(x=anthro, y=point.diff)) + 
   geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=anthro, group=Alab, shape=Alab),
@@ -157,10 +157,10 @@ yrange <- c(-0.4,0.5)
 ylabel="Adjusted difference in mean anthropometry Z score\nbetween 10th and 90th percentile of telomere measure\n"
 
 d <- d %>% mutate(group = case_when(
-  grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2 and growth\n",
+  grepl("delta_", Y) ~ "Change in growth \nbetween Years 1 and 2\n",
   grepl("velocity", Y) ~ "Growth velocity \n between Years 1 and 2\n",
   grepl("z_t3",Y) ~ "Growth at Year 2\n"),
-  group = factor(group, levels = c("Growth at Year 2\n", "Change in growth \nbetween Years 1 and 2 and growth\n", 
+  group = factor(group, levels = c("Growth at Year 2\n", "Change in growth \nbetween Years 1 and 2\n", 
                                    "Growth velocity \n between Years 1 and 2\n")))
 p <- ggplot(d, aes(x=anthro, y=point.diff)) + 
   geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=anthro, group=Alab, shape=Alab),
