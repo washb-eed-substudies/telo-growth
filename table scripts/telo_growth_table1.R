@@ -2,9 +2,7 @@ rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
 
-library(boxr)
-box_auth()
-d <- box_read_csv(839767614700)
+d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
 
 # calculating quantiles/n for each variable 
 female <- round(length(d$sex[d$sex == "female"])/sum(!is.na(d$sex))* 100) #percentage
