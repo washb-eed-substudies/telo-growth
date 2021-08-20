@@ -2,10 +2,7 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-library(boxr)
-box_auth()
-d <- box_read_csv(839767614700)
-
+d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
 
 # remove twins
 # check if any other childids other than 351051, 311022, 234042 end in 2 (twin)

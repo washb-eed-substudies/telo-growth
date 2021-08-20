@@ -131,7 +131,7 @@ p +
   p
 p
 
-ggsave(p, file = here("figures/telo-growth/telo_growth_enrollment.png"), height=14, width=9)
-ggsave(p, file = here("figures/telo-growth/telo_growth_enrollment.tiff"), height=14, width=9)
+#ggsave(p, file = here("figures/telo_growth_figure1.png"), height=14, width=9)
+ggsave(p, file = here("figures/main/telo_growth_figure1.tiff"), height=14, width=9)
 
 
