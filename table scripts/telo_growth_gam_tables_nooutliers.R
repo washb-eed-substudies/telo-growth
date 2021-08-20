@@ -7,12 +7,12 @@ source(here::here("table scripts/table-functions.R"))
 
 
 # load enrollment characteristics and results
-H1 <- readRDS(here('results/gam_results/unadjusted/telot2_res.RDS'))
-H2 <- readRDS(here('results/gam_results/unadjusted/telot3_res.RDS'))
-H3 <- readRDS(here('results/gam_results/unadjusted/dtelo_res.RDS'))
-H1adj <- readRDS(here('results/gam_results/adjusted/telot2_adj_res.RDS'))
-H2adj <- readRDS(here('results/gam_results/adjusted/telot3_adj_res.RDS'))
-H3adj <- readRDS(here('results/gam_results/adjusted/dtelo_adj_res.RDS'))
+H1 <- readRDS(here('results/gam_results/unadjusted/telot2_res_nooutliers.RDS'))
+H2 <- readRDS(here('results/gam_results/unadjusted/telot3_res_nooutliers.RDS'))
+H3 <- readRDS(here('results/gam_results/unadjusted/dtelo_res_nooutliers.RDS'))
+H1adj <- readRDS(here('results/gam_results/adjusted/telot2_adj_res_nooutliers.RDS'))
+H2adj <- readRDS(here('results/gam_results/adjusted/telot3_adj_res_nooutliers.RDS'))
+H3adj <- readRDS(here('results/gam_results/adjusted/dtelo_adj_res_nooutliers.RDS'))
 
 
 #### TABLES ####
@@ -70,23 +70,9 @@ tbl3flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome
 
 
 #### SAVE TABLES ####
-
-write.csv(tbl1, file=here("tables/gam/telo-growth-table2.csv"))
-write.csv(tbl2, here('tables/gam/telo-growth-table3.csv'))
-write.csv(tbl3, here('tables/gam/telo-growth-table4.csv'))
-write.csv(tbl1supp, file=here("tables/gam/telo-growth-supptable1.csv"))
-write.csv(tbl2supp, here('tables/gam/telo-growth-supptable2.csv'))
-write.csv(tbl3supp, here('tables/gam/telo-growth-supptable3.csv'))
-
-save_as_docx("Table 2: Association Between Telomere Length at Year 1 and Growth" = tbl1flex, 
-             "Table 3: Association Between Telomere Length at Year 2 and Growth" = tbl2flex, 
-             "Table 4: Association Between Change in Telomere Length and Growth" = tbl3flex, 
-             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth main gam tables 08.19.21.docx",
-             pr_section = sect_properties)
-
-save_as_docx("Table S1: Association Between Telomere Length at Year 1 and Growth" = tbl1flexsupp, 
-             "Table S2: Association Between Telomere Length at Year 2 and Growth" = tbl2flexsupp, 
-             "Table S3: Association Between Change in Telomere Length and Growth" = tbl3flexsupp, 
-             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth supplementary gam tables 08.19.21.docx",
+save_as_docx("Association Between Telomere Length at Year 1 and Growth" = tbl1flexsupp, 
+             "Association Between Telomere Length at Year 2 and Growth" = tbl2flexsupp, 
+             "Association Between Change in Telomere Length and Growth" = tbl3flexsupp, 
+             path="C:/Users/Sophia/Documents/WASH/WASH Telomeres and Growth/telo-growth outlier sensitivity.docx",
              pr_section = sect_properties)
 

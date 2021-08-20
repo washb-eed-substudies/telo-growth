@@ -38,7 +38,7 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
           next
         }
         
-        sigadj <- ifelse(filtered_adj$BH.Pval < 0.2, "*", "")
+        sigadj <- ifelse(filtered_adj$BH.Pval < 0.05, "*", "")
         pvaladj <- paste(round(filtered_adj$Pval, 2), sigadj, sep="")
         
         if(j==1|skipped==T){
@@ -122,7 +122,7 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
           next
         }
         
-        sigadj <- ifelse(filtered_adj$BH.Pval < 0.2, "*", "")
+        sigadj <- ifelse(filtered_adj$BH.Pval < 0.05, "*", "")
         pvaladj <- paste(round(filtered_adj$Pval, 2), sigadj, sep="")
         
         if(j==1|skipped==T){
@@ -196,7 +196,7 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "N, 10th Percentile, and 90th Percentile are from the adjusted analyses", colwidths = 9)
     flextbl <- add_footer_row(flextbl, top=F, 
-                              values = "* P-value < 0.2 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 9)
+                              values = "* P-value < 0.05 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 9)
     flextbl <- fontsize(flextbl, part = "all", size = 7)
     flextbl <- width(flextbl, 1:9, width=c(exp_col_size, out_col_size, .3, .55, .55, .8, .8, 1, .5))
     
@@ -308,7 +308,7 @@ hr_tbl <- function(name, expo_var, out_var, exposure, outcome, results, results_
           next
         }
         
-        sigadj <- ifelse(filtered_adj$BH.Pval < 0.2, "*", "")
+        sigadj <- ifelse(filtered_adj$BH.Pval < 0.05, "*", "")
         pvaladj <- paste(round(filtered_adj$Pval, 2), sigadj, sep="")
         
         if(j==1|skipped==T){
@@ -392,7 +392,7 @@ hr_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results, res
           next
         }
         
-        sigadj <- ifelse(filtered_adj$BH.Pval < 0.2, "*", "")
+        sigadj <- ifelse(filtered_adj$BH.Pval < 0.05, "*", "")
         pvaladj <- paste(round(filtered_adj$Pval, 2), sigadj, sep="")
         
         if(j==1|skipped==T){
@@ -465,7 +465,7 @@ hr_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results, res
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "N, 10th Percentile, and 90th Percentile are from the adjusted analyses", colwidths = 7)
     flextbl <- add_footer_row(flextbl, top=F, 
-                              values = "*P-value < 0.2 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 7)
+                              values = "*P-value < 0.05 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 7)
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "Hazard ratio could not be estimated for sitting without support since nearly all children had achieved this milestone before time of measurement", colwidths = 7)
     flextbl <- fontsize(flextbl, part = "all", size = 7)
