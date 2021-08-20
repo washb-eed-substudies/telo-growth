@@ -44,10 +44,10 @@ d <- d %>% arrange(Y) %>%
       A=="delta_TS" ~ "RTM corrected change",
       A=="raw_delta_TS" ~ "Uncorrected change"),
     anthro = case_when(
-      grepl("delta_laz", Y) ~ "Δ LAZ",
-      grepl("delta_waz", Y) ~ "Δ WAZ",
-      grepl("delta_wlz", Y) ~ "Δ WLZ",
-      grepl("delta_hcz", Y) ~ "Δ HCZ",
+      grepl("delta_laz", Y) ~ "??? LAZ",
+      grepl("delta_waz", Y) ~ "??? WAZ",
+      grepl("delta_wlz", Y) ~ "??? WLZ",
+      grepl("delta_hcz", Y) ~ "??? HCZ",
       grepl("laz_t3",Y) ~ "LAZ",
       grepl("waz_t3",Y) ~ "WAZ",
       grepl("wlz_t3",Y) ~ "WLZ",
@@ -58,7 +58,7 @@ d <- d %>% arrange(Y) %>%
     ),
     anthro=factor(anthro,
                   levels = c("LAZ","WAZ","WLZ","HCZ",
-                             "Δ LAZ", "Δ WAZ", "Δ WLZ", "Δ HCZ",
+                             "??? LAZ", "??? WAZ", "??? WLZ", "??? HCZ",
                              "LENGTH\n","WEIGHT\n","HEAD\nCIRCUMFERENCE"))) %>%
   arrange(anthro) %>%
   mutate(Ylab = factor(Ylab, levels=unique(Ylab)))
@@ -131,10 +131,10 @@ d <- d %>% arrange(Y) %>%
       A=="delta_TS" ~ "RTM corrected change",
       A=="raw_delta_TS" ~ "Uncorrected change"),
     anthro = case_when(
-      grepl("delta_laz", Y) ~ "Δ LAZ",
-      grepl("delta_waz", Y) ~ "Δ WAZ",
-      grepl("delta_wlz", Y) ~ "Δ WLZ",
-      grepl("delta_hcz", Y) ~ "Δ HCZ",
+      grepl("delta_laz", Y) ~ "??? LAZ",
+      grepl("delta_waz", Y) ~ "??? WAZ",
+      grepl("delta_wlz", Y) ~ "??? WLZ",
+      grepl("delta_hcz", Y) ~ "??? HCZ",
       grepl("laz_t3",Y) ~ "LAZ",
       grepl("waz_t3",Y) ~ "WAZ",
       grepl("wlz_t3",Y) ~ "WLZ",
@@ -145,7 +145,7 @@ d <- d %>% arrange(Y) %>%
     ),
     anthro=factor(anthro,
                   levels = c("LAZ","WAZ","WLZ","HCZ",
-                             "Δ LAZ", "Δ WAZ", "Δ WLZ", "Δ HCZ",
+                             "??? LAZ", "??? WAZ", "??? WLZ", "??? HCZ",
                              "LENGTH\n","WEIGHT\n","HEAD\nCIRCUMFERENCE"))) %>%
   arrange(anthro) %>%
   mutate(Ylab = factor(Ylab, levels=unique(Ylab)))
