@@ -7,7 +7,7 @@ library(cowplot)
 
 
 #load covariates, exposures, outcomes dataset
-load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
+d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
 
 
 head(d)

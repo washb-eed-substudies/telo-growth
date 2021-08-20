@@ -3,7 +3,8 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-d<-haven::read_dta(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.dta"))
+d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
+
 colnames(d)
 
 plotdf <- bind_rows(
