@@ -22,7 +22,7 @@ exposure <- c("TS_t2")
 outcome <- c("laz_t2", "waz_t2", "whz_t2" ,"hcz_t2", "laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
              "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3",
              "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
-expo_var <- c("Telomere length at Year 1")
+expo_var <- c("Telomere length at Year 1 (T/S Ratio)")
 out_var <- c("LAZ Year 1", "WAZ Year 1", "WLZ Year 1", "HCZ Year 1",
              "LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2", 
              "Change in LAZ between Year 1 and Year 2", "Change in WAZ between Year 1 and Year 2", 
@@ -39,7 +39,7 @@ tbl1flexsupp <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome
 
 exposure <- c("TS_t3")
 outcome <- c("laz_t3", "waz_t3", "whz_t3" ,"hcz_t3")
-expo_var <- c("Telomere length at Year 2")
+expo_var <- c("Telomere length at Year 2 (T/S Ratio)")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2")
 
 tbl2 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, H2, H2adj, T)
@@ -54,7 +54,7 @@ exposure <- c("delta_TS")
 outcome <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
              "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
              "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
-expo_var <- c("Change in telomere length between Year 1 and Year 2")
+expo_var <- c("Change in telomere length between Year 1 and Year 2 (T/S Ratio)")
 out_var <- c("LAZ Year 2", "WAZ Year 2", "WLZ Year 2", "HCZ Year 2", 
              "Change in LAZ between Year 1 and Year 2", "Change in WAZ between Year 1 and Year 2", 
              "Change in WLZ between Year 1 and Year 2", "Change in HCZ between Year 1 and Year 2",
