@@ -106,7 +106,7 @@ levels(d$life_viol_any_t3)[length(levels(d$life_viol_any_t3))]<-"Missing"
 #Loop over exposure-outcome pairs
 
 #### Association between telomere length at year 1 and child growth ####
-Xvars <- c("TS_t2", "TS_t2_Z")            
+Xvars <- c("TS_t2")            
 Yvars <- c("laz_t2", "waz_t2", "whz_t2" ,"hcz_t2", "laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
            "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3",
            "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3") 
@@ -189,7 +189,7 @@ saveRDS(H1_adj_plot_data, here("results/gam_figure_data/adjusted/telot2_adj_spli
 
 
 #### Association between telomere length at year 2 and growth ####
-Xvars <- c("TS_t3", "TS_t3_Z")            
+Xvars <- c("TS_t3")            
 Yvars <- c("laz_t3", "waz_t3", "whz_t3" ,"hcz_t3") 
 
 Wvars_3_3<-c("sex","birthord", "momage", "momheight","momedu", 
@@ -244,7 +244,7 @@ saveRDS(H2_plot_data, here("results/gam_figure_data/adjusted/telot3_adj_spline_d
 
 
 #### Association between change in telomere length between years 1 and 2 and growth ####
-Xvars <- c("delta_TS", "delta_TS_Z")            
+Xvars <- c("delta_TS")            
 Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3", 
            "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3", 
            "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3")
@@ -309,4 +309,22 @@ saveRDS(H3_adj_res, here("results/gam_results/adjusted/dtelo_adj_res_nooutliers.
 
 #Save plot data
 saveRDS(H3_plot_data, here("results/gam_figure_data/adjusted/dtelo_adj_spline_data_nooutliers.RDS"))
+
+# load all results
+H1_adj_res$H = 1
+H2_adj_res$H = 2
+H3_adj_res$H = 3
+
+# make splits between adjusted and unadjusted results and Z scores v. original telo length
+full_adj_res <- rbind(filter(H1_adj_res, X=="TS_t2"), filter(H2_adj_res, X=="TS_t3"), 
+                      filter(H3_adj_res, X=="delta_TS"))
+
+full_adj_res <- full_adj_res %>% group_by(Y) %>% 
+  mutate(BH.Pval=p.adjust(Pval, method="BH")) %>%
+  ungroup() %>%
+  as.data.frame()
+
+saveRDS(full_adj_res %>% filter(H==1) %>% select(-H), here("results/gam_results/adjusted/telot2_adj_res_nooutliers.RDS"))
+saveRDS(full_adj_res %>% filter(H==2) %>% select(-H), here("results/gam_results/adjusted/telot3_adj_res_nooutliers.RDS"))
+saveRDS(full_adj_res %>% filter(H==3) %>% select(-H), here("results/gam_results/adjusted/dtelo_adj_res_nooutliers.RDS"))
 
